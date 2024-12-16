@@ -501,3 +501,79 @@ BEGIN
     WHERE ID_Customer = @ID_Customer;
 END
 GO
+
+CREATE OR ALTER PROC SP_ViewBranchFood
+    @ID_Branch INT
+AS
+BEGIN
+    SELECT FI.ID_Food, FI.FoodName, BF.Available
+    FROM FOOD_ITEM FI
+        JOIN BRANCH_FOOD BF ON FI.ID_Food = BF.ID_Food
+        JOIN BRANCH B ON BF.ID_Branch = B.ID_Branch
+    WHERE B.ID_Branch = @ID_Branch
+END
+GO
+
+CREATE OR ALTER FUNCTION dbo.getDailyIncome(@ID_Branch INT, @year INT, @month INT, @date INT)
+RETURNS INT
+WITH RETURNS NULL ON NULL INPUT
+AS
+BEGIN
+    RETURN (
+        SELECT SUM(ActualPrice)
+        FROM [ORDER]
+        WHERE @ID_Branch = ID_Branch
+          AND OrderDate >= DATEFROMPARTS(@year, @month, @date)
+          AND OrderDate < DATEADD(DAY, 1, DATEFROMPARTS(@year, @month, @date))
+    )
+END
+GO
+
+CREATE OR ALTER FUNCTION dbo.getMonthlyIncome(@ID_Branch INT, @year INT, @month INT)
+RETURNS INT
+WITH RETURNS NULL ON NULL INPUT
+AS
+BEGIN
+    RETURN (
+        SELECT SUM(ActualPrice)
+        FROM [ORDER]
+        WHERE @ID_Branch = ID_Branch
+          AND OrderDate >= DATEFROMPARTS(@year, @month, 1)
+          AND OrderDate < DATEADD(MONTH, 1, DATEFROMPARTS(@year, @month, 1))
+    )
+END
+GO
+
+CREATE OR ALTER FUNCTION dbo.getYearlyIncome(@ID_Branch INT, @year INT)
+RETURNS INT
+WITH RETURNS NULL ON NULL INPUT
+AS
+BEGIN
+    RETURN (
+        SELECT SUM(ActualPrice)
+        FROM [ORDER]
+        WHERE @ID_Branch = ID_Branch
+          AND OrderDate >= DATEFROMPARTS(@year, 1, 1)
+          AND OrderDate < DATEADD(YEAR, 1, DATEFROMPARTS(@year, 1, 1))
+    )
+END
+GO
+
+CREATE OR ALTER PROC SP_GetBranchIncome
+    @ID_Branch INT
+AS
+BEGIN
+    DECLARE @YearlyIncome INT
+    DECLARE @MonthlyIncome INT
+    DECLARE @DailyIncome INT
+
+    SET @YearlyIncome = dbo.getYearlyIncome(@ID_Branch, YEAR(GETDATE()))
+    SET @MonthlyIncome = dbo.getMonthlyIncome(@ID_Branch, YEAR(GETDATE()), MONTH(GETDATE()))
+    SET @DailyIncome = dbo.getDailyIncome(@ID_Branch, YEAR(GETDATE()), MONTH(GETDATE()), DAY(GETDATE()))
+
+    -- Print the results
+    PRINT 'Yearly income: ' + CAST(@YearlyIncome AS NVARCHAR(50))
+    PRINT 'Monthly income: ' + CAST(@MonthlyIncome AS NVARCHAR(50))
+    PRINT 'Daily income: ' + CAST(@DailyIncome AS NVARCHAR(50))
+END
+GO
