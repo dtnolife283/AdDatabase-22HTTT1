@@ -577,3 +577,97 @@ BEGIN
     PRINT 'Daily income: ' + CAST(@DailyIncome AS NVARCHAR(50))
 END
 GO
+
+-- Them mon
+CREATE PROCEDURE AddFoodItem 
+    @FoodName NVARCHAR(50),
+    @Price INT,
+    @IsAreaRestricted INT = 0,
+    @DeliverySafe INT = 1,
+    @ID_Type INT = NULL
+AS
+BEGIN
+    IF (@Price <= 0 OR @IsAreaRestricted NOT IN (0, 1) OR @DeliverySafe NOT IN (0, 1))
+    BEGIN
+        RAISERROR('Invalid input parameters.', 16, 1);
+        RETURN;
+    END
+
+    IF (@ID_Type IS NOT NULL AND NOT EXISTS (SELECT 1 FROM FOOD_TYPE WHERE ID_Type = @ID_Type))
+    BEGIN
+        RAISERROR('Invalid Food Type ID.', 16, 1);
+        RETURN;
+    END
+
+    INSERT INTO FOOD_ITEM (FoodName, Price, IsAreaRestricted, DeliverySafe, ID_Type)
+    VALUES (@FoodName, @Price, @IsAreaRestricted, @DeliverySafe, @ID_Type);
+
+    PRINT 'Food item added successfully.';
+END;
+
+-- xuat hoa don
+CREATE PROCEDURE GenerateInvoice 
+    @OrderID INT
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    -- Declare variables for order details
+    DECLARE @CustomerName NVARCHAR(50),
+            @OrderDate DATE,
+            @TotalPrice INT,
+            @ActualPrice INT,
+            @BranchName NVARCHAR(50),
+            @EmployeeName NVARCHAR(50);
+
+    -- Fetch basic order details
+    SELECT 
+        C.CustomerName, 
+        O.OrderDate, 
+        O.TotalPrice, 
+        O.ActualPrice, 
+        B.BranchName, 
+        E.EmployeeName
+    INTO 
+        @CustomerName, @OrderDate, @TotalPrice, @ActualPrice, @BranchName, @EmployeeName
+    FROM [ORDER] O
+    LEFT JOIN CUSTOMER C ON O.ID_Customer = C.ID_Customer
+    LEFT JOIN BRANCH B ON O.ID_Branch = B.ID_Branch
+    LEFT JOIN EMPLOYEE E ON O.ID_Employee = E.ID_Employee
+    WHERE O.ID_Order = @OrderID;
+
+    -- Print invoice header
+    PRINT '--------------------------------------------------';
+    PRINT '                  INVOICE';
+    PRINT '--------------------------------------------------';
+    PRINT 'Order ID: ' + CAST(@OrderID AS NVARCHAR);
+    PRINT 'Order Date: ' + CAST(@OrderDate AS NVARCHAR);
+    PRINT 'Customer: ' + ISNULL(@CustomerName, 'N/A');
+    PRINT 'Branch: ' + ISNULL(@BranchName, 'N/A');
+    PRINT 'Employee: ' + ISNULL(@EmployeeName, 'N/A');
+    PRINT '--------------------------------------------------';
+
+    -- Fetch ordered food details
+    PRINT 'Food Items:';
+    PRINT '--------------------------------------------------';
+    PRINT 'Food Name         | Quantity | Price';
+    PRINT '--------------------------------------------------';
+
+    SELECT 
+        FI.FoodName, 
+        OFD.Quantity, 
+        BF.Available, 
+        FI.Price
+    FROM ORDER_FOOD OFD
+    JOIN BRANCH_FOOD BF ON OFD.ID_BranchFood = BF.ID_BranchFood
+    JOIN FOOD_ITEM FI ON BF.ID_Food = FI.ID_Food
+    WHERE OFD.ID_Order = @OrderID;
+
+    -- Print totals
+    PRINT '--------------------------------------------------';
+    PRINT 'Total Price: ' + CAST(@TotalPrice AS NVARCHAR);
+    PRINT 'Actual Price (After Discount): ' + CAST(@ActualPrice AS NVARCHAR);
+    PRINT '--------------------------------------------------';
+
+    PRINT 'Thank you for your purchase!';
+END;
