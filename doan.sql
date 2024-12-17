@@ -605,6 +605,8 @@ BEGIN
     PRINT 'Food item added successfully.';
 END;
 
+GO
+
 -- xuat hoa don
 CREATE PROCEDURE GenerateInvoice 
     @OrderID INT
