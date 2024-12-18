@@ -673,3 +673,116 @@ BEGIN
 
     PRINT 'Thank you for your purchase!';
 END;
+GO
+
+CREATE OR ALTER PROC sp_UpdateCardStatus
+    @ID_Customer INT
+AS
+BEGIN
+    DECLARE @ID_Card INT, @Point INT, @ID_Level INT, @MemLevel VARCHAR(50), @DateCreated DATE
+
+    SELECT @ID_Card = ID_Card
+    FROM CUSTOMER
+    WHERE ID_Customer = @ID_Customer
+
+    IF @ID_Card IS NULL
+    BEGIN
+        PRINT 'USER HAS NO CARD.'
+        RETURN
+    END
+
+    SELECT 
+        @Point = M.Point,
+        @ID_Level = M.ID_Level,
+        @MemLevel = ML.LevelName,
+        @DateCreated = M.DateCreated
+    FROM MEMBERSHIP M
+    JOIN MEM_LEVEL ML ON M.ID_Level = ML.ID_Level
+    WHERE M.ID_Card = @ID_Card
+
+    -- IF DATEADD(YEAR, 1, @DateCreated) > GETDATE()
+    -- BEGIN
+    --     RETURN
+    -- END
+
+    IF @MemLevel = 'Membership'
+    BEGIN
+        IF @Point > 100
+        BEGIN
+            UPDATE MEMBERSHIP 
+            SET DateCreated = GETDATE(), Point = 0 
+            WHERE ID_Customer = @ID_Customer
+
+            UPDATE MEM_LEVEL 
+            SET LevelName = 'Silver', DiscountPercentages = 20
+            WHERE ID_Level = @ID_Level
+        END
+    END
+    ELSE IF @MemLevel = 'Silver'
+    BEGIN
+        IF @Point < 50
+        BEGIN
+            UPDATE MEMBERSHIP 
+            SET DateCreated = GETDATE(), Point = 0 
+            WHERE ID_Customer = @ID_Customer
+
+            UPDATE MEM_LEVEL 
+            SET LevelName = 'Membership', DiscountPercentages = 0
+            WHERE ID_Level = @ID_Level
+        END
+        ELSE IF @Point >= 50 AND @Point < 100
+        BEGIN
+        UPDATE MEMBERSHIP 
+            SET DateCreated = GETDATE(), Point = 0 
+            WHERE ID_Customer = @ID_Customer
+        END
+        ELSE
+        BEGIN
+            UPDATE MEMBERSHIP 
+            SET DateCreated = GETDATE(), Point = 0 
+            WHERE ID_Customer = @ID_Customer
+
+            UPDATE MEM_LEVEL 
+            SET LevelName = 'Gold', DiscountPercentages = 30
+            WHERE ID_Level = @ID_Level
+        END
+    END
+    ELSE
+    BEGIN
+        IF @Point < 100
+        BEGIN
+            UPDATE MEMBERSHIP 
+            SET DateCreated = GETDATE(), Point = 0 
+            WHERE ID_Customer = @ID_Customer
+
+            UPDATE MEM_LEVEL 
+            SET LevelName = 'Silver', DiscountPercentages = 20
+            WHERE ID_Level = @ID_Level
+        END
+        ELSE
+        BEGIN
+            UPDATE MEMBERSHIP 
+            SET DateCreated = GETDATE(), Point = 0 
+            WHERE ID_Customer = @ID_Customer
+        END
+    END
+    -- Điều kiện ĐẠT hạng thẻ SILVER: có tổng giá trị tiêu dùng tích lũy từ 10.000.000 VNĐ (100 điểm).
+    
+    -- Điều kiện GIỮ hạng thẻ SILVER: có tổng giá trị tiêu dùng tích lũy từ 
+    -- 5.000.000 VNĐ (50 điểm) trong vòng 01 năm kể từ ngày đạt thẻ SILVER.
+
+    -- Điều kiện NÂNG hạng thẻ GOLD: có tổng giá trị tiêu dùng tích lũy từ
+    -- 10.000.000 VNĐ (100 điểm) trong vòng 01 năm kể từ ngày đạt thẻ SILVER.
+
+    -- Nếu trong vòng 01 năm kể từ ngày đạt thẻ SILVER có tổng giá trị tiêu 
+    -- dùng tích lũy dưới 5.000.000 VNĐ (50 điểm): thẻ sẽ trở lại mức ban đầu là Membership
+
+    -- Điều kiện ĐẠT hạng thẻ GOLD: có tổng giá trị tiêu dùng tích lũy từ
+    -- 10.000.000 VNĐ (100 điểm) trong vòng 01 năm kể từ ngày đạt thẻ SILVER.
+
+    -- Điều kiện GIỮ hạng thẻ GOLD: có tổng giá trị tiêu dùng tích lũy từ
+    -- 10.000.000 VNĐ (100 điểm) trong vòng 01 năm kể từ ngày đạt thẻ GOLD.
+    -- Nếu trong vòng 01 năm kể từ ngày đạt thẻ GOLD có tổng giá trị tiêu
+    -- dùng tích lũy dưới 10.000.000 VNĐ (100 điểm): thẻ sẽ xuống hạng SILVER
+END
+GO
