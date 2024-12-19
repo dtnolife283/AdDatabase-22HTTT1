@@ -624,14 +624,12 @@ BEGIN
 
     -- Fetch basic order details
     SELECT 
-        C.CustomerName, 
-        O.OrderDate, 
-        O.TotalPrice, 
-        O.ActualPrice, 
-        B.BranchName, 
-        E.EmployeeName
-    INTO 
-        @CustomerName, @OrderDate, @TotalPrice, @ActualPrice, @BranchName, @EmployeeName
+        @CustomerName = ISNULL(C.CustomerName, 'N/A'), 
+        @OrderDate = O.OrderDate, 
+        @TotalPrice = O.TotalPrice, 
+        @ActualPrice = O.ActualPrice, 
+        @BranchName = ISNULL(B.BranchName, 'N/A'), 
+        @EmployeeName = ISNULL(E.EmployeeName, 'N/A')
     FROM [ORDER] O
     LEFT JOIN CUSTOMER C ON O.ID_Customer = C.ID_Customer
     LEFT JOIN BRANCH B ON O.ID_Branch = B.ID_Branch
@@ -644,21 +642,21 @@ BEGIN
     PRINT '--------------------------------------------------';
     PRINT 'Order ID: ' + CAST(@OrderID AS NVARCHAR);
     PRINT 'Order Date: ' + CAST(@OrderDate AS NVARCHAR);
-    PRINT 'Customer: ' + ISNULL(@CustomerName, 'N/A');
-    PRINT 'Branch: ' + ISNULL(@BranchName, 'N/A');
-    PRINT 'Employee: ' + ISNULL(@EmployeeName, 'N/A');
+    PRINT 'Customer: ' + @CustomerName;
+    PRINT 'Branch: ' + @BranchName;
+    PRINT 'Employee: ' + @EmployeeName;
     PRINT '--------------------------------------------------';
 
-    -- Fetch ordered food details
+    -- Print ordered food items
     PRINT 'Food Items:';
     PRINT '--------------------------------------------------';
     PRINT 'Food Name         | Quantity | Price';
     PRINT '--------------------------------------------------';
 
+    -- Display food items using SELECT
     SELECT 
-        FI.FoodName, 
+        FI.FoodName AS [Food Name], 
         OFD.Quantity, 
-        BF.Available, 
         FI.Price
     FROM ORDER_FOOD OFD
     JOIN BRANCH_FOOD BF ON OFD.ID_BranchFood = BF.ID_BranchFood
