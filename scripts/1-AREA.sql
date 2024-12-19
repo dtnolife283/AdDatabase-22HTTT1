@@ -1,5 +1,5 @@
-INSERT INTO AREA (ID_Area, AreaName) VALUES ('1', 'Johnshire');
-INSERT INTO AREA (ID_Area, AreaName) VALUES ('2', 'Lake Rickyfort');
-INSERT INTO AREA (ID_Area, AreaName) VALUES ('3', 'Craigview');
-INSERT INTO AREA (ID_Area, AreaName) VALUES ('4', 'Beststad');
-INSERT INTO AREA (ID_Area, AreaName) VALUES ('5', 'Ianberg');
+INSERT INTO AREA (ID_Area, AreaName) VALUES ('1', 'Romanland');
+INSERT INTO AREA (ID_Area, AreaName) VALUES ('2', 'Ashleyshire');
+INSERT INTO AREA (ID_Area, AreaName) VALUES ('3', 'Amandafurt');
+INSERT INTO AREA (ID_Area, AreaName) VALUES ('4', 'Lake Kathyfurt');
+INSERT INTO AREA (ID_Area, AreaName) VALUES ('5', 'Brentfurt');
