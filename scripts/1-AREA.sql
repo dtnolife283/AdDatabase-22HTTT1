@@ -1,5 +1,5 @@
-INSERT INTO AREA (ID_Area, AreaName) VALUES ('1', 'Alanborough');
-INSERT INTO AREA (ID_Area, AreaName) VALUES ('2', 'Marshallchester');
-INSERT INTO AREA (ID_Area, AreaName) VALUES ('3', 'Port Saraton');
-INSERT INTO AREA (ID_Area, AreaName) VALUES ('4', 'New Traceychester');
-INSERT INTO AREA (ID_Area, AreaName) VALUES ('5', 'Millertown');
+INSERT INTO AREA (ID_Area, AreaName) VALUES ('1', 'Silvaville');
+INSERT INTO AREA (ID_Area, AreaName) VALUES ('2', 'East Cody');
+INSERT INTO AREA (ID_Area, AreaName) VALUES ('3', 'East David');
+INSERT INTO AREA (ID_Area, AreaName) VALUES ('4', 'West Daniel');
+INSERT INTO AREA (ID_Area, AreaName) VALUES ('5', 'New Steventon');
