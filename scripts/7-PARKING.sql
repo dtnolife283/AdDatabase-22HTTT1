@@ -1,0 +1,15 @@
+INSERT INTO PARKING (ID_Parking, Address, OpeningHour, CloseHour, ParkingType, ID_Branch) VALUES (1, '957 Catherine Loop Apt. 903', '12:00:00', '19:00:00', 1, 15);
+INSERT INTO PARKING (ID_Parking, Address, OpeningHour, CloseHour, ParkingType, ID_Branch) VALUES (2, '557 Thomas Views Apt. 754', '12:00:00', '21:00:00', 0, 9);
+INSERT INTO PARKING (ID_Parking, Address, OpeningHour, CloseHour, ParkingType, ID_Branch) VALUES (3, '468 Bautista Throughway', '11:00:00', '19:00:00', 0, 13);
+INSERT INTO PARKING (ID_Parking, Address, OpeningHour, CloseHour, ParkingType, ID_Branch) VALUES (4, '49845 Steven Station', '06:00:00', '22:00:00', 0, 12);
+INSERT INTO PARKING (ID_Parking, Address, OpeningHour, CloseHour, ParkingType, ID_Branch) VALUES (5, '16847 Stacy Islands', '08:00:00', '20:00:00', 1, 15);
+INSERT INTO PARKING (ID_Parking, Address, OpeningHour, CloseHour, ParkingType, ID_Branch) VALUES (6, '5482 Newman Circle Suite 999', '07:00:00', '24:00:00', 0, 1);
+INSERT INTO PARKING (ID_Parking, Address, OpeningHour, CloseHour, ParkingType, ID_Branch) VALUES (7, '2146 Tiffany Shore Apt. 133', '10:00:00', '24:00:00', 1, 4);
+INSERT INTO PARKING (ID_Parking, Address, OpeningHour, CloseHour, ParkingType, ID_Branch) VALUES (8, '702 Stanley Viaduct Suite 415', '06:00:00', '23:00:00', 1, 1);
+INSERT INTO PARKING (ID_Parking, Address, OpeningHour, CloseHour, ParkingType, ID_Branch) VALUES (9, '1097 Kayla Pass Apt. 998', '11:00:00', '22:00:00', 0, 4);
+INSERT INTO PARKING (ID_Parking, Address, OpeningHour, CloseHour, ParkingType, ID_Branch) VALUES (10, '7605 Mcneil Divide', '09:00:00', '20:00:00', 1, 15);
+INSERT INTO PARKING (ID_Parking, Address, OpeningHour, CloseHour, ParkingType, ID_Branch) VALUES (11, '9632 Horne Ramp Apt. 826', '10:00:00', '22:00:00', 0, 2);
+INSERT INTO PARKING (ID_Parking, Address, OpeningHour, CloseHour, ParkingType, ID_Branch) VALUES (12, '7359 Kirby Coves Suite 600', '10:00:00', '24:00:00', 0, 2);
+INSERT INTO PARKING (ID_Parking, Address, OpeningHour, CloseHour, ParkingType, ID_Branch) VALUES (13, '50632 Pollard Spring', '09:00:00', '19:00:00', 1, 14);
+INSERT INTO PARKING (ID_Parking, Address, OpeningHour, CloseHour, ParkingType, ID_Branch) VALUES (14, '7512 Beth Manor', '07:00:00', '18:00:00', 0, 15);
+INSERT INTO PARKING (ID_Parking, Address, OpeningHour, CloseHour, ParkingType, ID_Branch) VALUES (15, '13533 Dennis Common', '11:00:00', '18:00:00', 1, 11);
