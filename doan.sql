@@ -709,7 +709,7 @@ BEGIN
         BEGIN
             UPDATE MEMBERSHIP 
             SET DateCreated = GETDATE(), Point = 0 
-            WHERE ID_Customer = @ID_Customer
+            WHERE ID_Card = @ID_Card
 
             UPDATE MEM_LEVEL 
             SET LevelName = 'Silver', DiscountPercentages = 20
@@ -722,7 +722,7 @@ BEGIN
         BEGIN
             UPDATE MEMBERSHIP 
             SET DateCreated = GETDATE(), Point = 0 
-            WHERE ID_Customer = @ID_Customer
+            WHERE ID_Card = @ID_Card
 
             UPDATE MEM_LEVEL 
             SET LevelName = 'Membership', DiscountPercentages = 0
@@ -732,13 +732,13 @@ BEGIN
         BEGIN
         UPDATE MEMBERSHIP 
             SET DateCreated = GETDATE(), Point = 0 
-            WHERE ID_Customer = @ID_Customer
+            WHERE ID_Card = @ID_Card
         END
         ELSE
         BEGIN
             UPDATE MEMBERSHIP 
             SET DateCreated = GETDATE(), Point = 0 
-            WHERE ID_Customer = @ID_Customer
+            WHERE ID_Card = @ID_Card
 
             UPDATE MEM_LEVEL 
             SET LevelName = 'Gold', DiscountPercentages = 30
@@ -751,7 +751,7 @@ BEGIN
         BEGIN
             UPDATE MEMBERSHIP 
             SET DateCreated = GETDATE(), Point = 0 
-            WHERE ID_Customer = @ID_Customer
+            WHERE ID_Card = @ID_Card
 
             UPDATE MEM_LEVEL 
             SET LevelName = 'Silver', DiscountPercentages = 20
@@ -761,7 +761,7 @@ BEGIN
         BEGIN
             UPDATE MEMBERSHIP 
             SET DateCreated = GETDATE(), Point = 0 
-            WHERE ID_Customer = @ID_Customer
+            WHERE ID_Card = @ID_Card
         END
     END
     -- Điều kiện ĐẠT hạng thẻ SILVER: có tổng giá trị tiêu dùng tích lũy từ 10.000.000 VNĐ (100 điểm).
