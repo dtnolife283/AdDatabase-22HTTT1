@@ -15,7 +15,7 @@ AS
         IF  EXISTS (SELECT ID_Order FROM [ORDER] WHERE ID_Order = @ID_Order)
         AND EXISTS (SELECT ID_BranchFood FROM BRANCH_FOOD WHERE ID_BranchFood = @ID_BranchFood)
         BEGIN
-            INSERT INTO ORDER_FOOD VALUES (@ID_Order, @ID_BranchFood, @Quantity);
+            INSERT INTO ORDER_FOOD VALUES (ID_Order, ID_BranchFood, Quantity) (@ID_Order, @ID_BranchFood, @Quantity);
         END;
     END;
 END;
