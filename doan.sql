@@ -438,30 +438,31 @@ BEGIN
 END;
 GO
 
-CREATE TRIGGER trg_CheckEmployeeHandlingOrder
-ON [ORDER]
-AFTER INSERT, UPDATE
-AS
-BEGIN
-    IF EXISTS (
-        SELECT 1
-        FROM inserted I
-        WHERE NOT EXISTS (
-            SELECT 1
-            FROM EMP_BRANCH_HISTORY EB
-            WHERE EB.ID_Employee = I.ID_Employee
-              AND I.ID_Branch = EB.ID_Branch
-              AND EB.EndDate IS NULL
-        )
-    )
-    BEGIN
-        RAISERROR ('Employee is not working at the branch at the time of order', 16, 1);
-        ROLLBACK TRANSACTION;
-    END
-END;
-GO
+--CREATE TRIGGER trg_CheckEmployeeHandlingOrder
+--ON [ORDER]
+--AFTER INSERT, UPDATE
+--AS
+--BEGIN
+--    IF EXISTS (
+--        SELECT 1
+--        FROM inserted I
+--        WHERE NOT EXISTS (
+--            SELECT 1
+--            FROM EMP_BRANCH_HISTORY EB
+--            WHERE EB.ID_Employee = I.ID_Employee
+--              AND I.ID_Branch = EB.ID_Branch
+--              AND EB.EndDate IS NULL
+--        )
+--    )
+--    BEGIN
+--        RAISERROR ('Employee is not working at the branch at the time of order', 16, 1);
+--        ROLLBACK TRANSACTION;
+--    END
+--END;
+--GO
 
 
+/*
 CREATE TRIGGER trg_CheckFoodAvailability
 ON ORDER_FOOD
 AFTER INSERT
@@ -479,7 +480,7 @@ BEGIN
     END
 END;
 GO
-
+*/
 CREATE PROCEDURE sp_UpdateLostCard
     @ID_Customer INT,
     @NewCard INT
@@ -783,4 +784,25 @@ BEGIN
     -- Nếu trong vòng 01 năm kể từ ngày đạt thẻ GOLD có tổng giá trị tiêu
     -- dùng tích lũy dưới 10.000.000 VNĐ (100 điểm): thẻ sẽ xuống hạng SILVER
 END
+GO
+
+CREATE PROC INSERT_ORDER_FOOD
+    @ID_BranchFood INT,
+    @ID_Order INT,
+    @Quantity INT
+AS
+BEGIN
+    --check if quantity = 0, if so do not insert
+    IF @Quantity = 0
+    BEGIN
+        PRINT 'Quantity cannot be 0';
+        RETURN;
+    END;
+
+    IF  EXISTS (SELECT ID_Order FROM [ORDER] WHERE ID_Order = @ID_Order)
+    AND EXISTS (SELECT ID_BranchFood FROM BRANCH_FOOD WHERE ID_BranchFood = @ID_BranchFood)
+    BEGIN
+        INSERT INTO ORDER_FOOD (ID_Order, ID_BranchFood, Quantity) VALUES (@ID_Order, @ID_BranchFood, @Quantity);
+    END;
+END;
 GO
