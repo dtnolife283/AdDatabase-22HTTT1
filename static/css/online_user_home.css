@@ -1,0 +1,28 @@
+@import url('variables.css');
+
+body {
+    background-color: var(--background-color);
+}
+
+header {
+    background-color: var(--secondary-color-3) !important;
+    color: var(--text-color) !important;
+}
+
+header a {
+    color: var(--text-color) !important;
+    font-weight: 600;
+}
+
+.nav-item {
+    font-size: large;
+}
+
+.navbar-brand {
+    font-size: x-large;
+    font-weight: 700;
+}
+
+.active {
+    color: rgba(color-mix(var(--text-color), black, 0.5));
+}

@@ -37,6 +37,12 @@ app.set('views', path.join(__dirname, 'views'));
 app.use(express.static(path.join(__dirname, 'static')));
 app.use(express.urlencoded({ extended: true }));
 
+app.get('/', async (req, res) => {
+    res.render('home', {
+        customCSS: ['online_user_home.css'],
+    })
+});
+
 app.listen(port, () => {
     console.log(`Server is running on http://localhost:${port}`);
 });
