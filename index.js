@@ -6,24 +6,14 @@ import knex from "knex";
 import dotenv from "dotenv";
 import onlineOrderRoutes from "./routes/online-order.js";
 import { get } from "http";
+import getData from "./utils/getData.js";
 
 dotenv.config();
+
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const app = express();
 const port = 3000;
-const db = knex({
-  client: "mssql",
-  connection: {
-    server: process.env.SERVER,
-    database: process.env.DATABASE,
-    user: process.env.USERNAME,
-    password: process.env.PASSWORD,
-    options: {
-      port: parseInt(process.env.PORT),
-    },
-  },
-});
 
 app.engine(
   ".hbs",
@@ -73,6 +63,27 @@ app.post("/booking", async (req, res) => {
     console.error("Error saving booking:", error);
     res.status(500).send("An error occurred while processing your booking.");
   }
+});
+
+app.get('/view', async (req, res) => {
+  const area = req.query.area;
+  const parking = req.query.parking;
+  const areas = await getData.getAreas();
+  let branches = [];
+  if ((area == 'all' || area == undefined) && (parking == 'all' || parking == undefined))
+    branches = await getData.getBranches();
+  else
+    branches = await getData.getBranches(area, parking);
+  branches.forEach((branch) => {
+    branch.OpeningHour = branch.OpeningHour.toISOString().slice(11, 16);
+    branch.CloseHour = branch.CloseHour.toISOString().slice(11, 16);
+  });
+  res.render('view', {
+    branches: branches,
+    areas: areas,
+    customCSS: ['online_user_home.css', 'view.css'],
+    customJS: ['view.js'],
+  });
 });
 
 app.use("/online-order", onlineOrderRoutes);

@@ -4,6 +4,7 @@
     --secondary-color-1: #D6C0B3;
     --secondary-color-2: #C4A29E;
     --secondary-color-3: #AB886D;
+    --secondary-color-4: #553f2f;
 
     --primary-btn-color: var(--secondary-color-1);
     --primary-btn-hover-color: var(--secondary-color-2);

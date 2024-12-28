@@ -1,0 +1,75 @@
+<div class="container mt-4">
+    <div class="filter ms-3 me-3">
+        <span class="filter-name">Branches</span>
+        <button class="filter-button">
+            <span class="filter-icon">
+                <ion-icon name="filter-circle-outline"></ion-icon>
+            </span>
+        </button>
+    </div>
+</div>
+<div class="container mt-4">
+    <div class="filter-content hide ms-3 me-3">
+        <form action="/view" method="get">
+            <div class="filter-item">
+                <label for="area">Area</label>
+                <select name="area" id="area">
+                    <option value="all">All</option>
+                    {{#each areas}}
+                        <option value="{{ID_Area}}">{{AreaName}}</option>
+                    {{/each}}
+                </select>
+            </div>
+            <div class="filter-item">
+                <label for="parking">Parking</label>
+                <select name="parking" id="parking">
+                    <option value="all">All</option>
+                    <option value="1">Cars</option>
+                    <option value="0">Motorbikes</option>
+                    <option value="none">None</option>
+                </select>
+            </div>
+            <div class="filter-actions">
+                <button type="submit">Apply Filter</button>
+                <button type="reset">Reset</button>
+            </div>
+        </form>
+    </div>
+</div>
+<div class="container mt-4">    
+    <div class="branch ms-3 me-3">
+        <div class="row">
+            {{#each branches}}
+                <div class="col-md-6">
+                    <div class="branch-item card mb-4 shadow">
+                        <div class="card-body" id="{{ID_Branch}}">
+                            <h5 class="card-title text-primary">
+                                <ion-icon name="storefront-outline"></ion-icon> {{BranchName}}
+                            </h5>
+                            <p class="card-text d-flex align-items-center">
+                                <i class="bi bi-geo me-2"></i> 
+                                <span><strong>Address:</strong> {{Address}}</span>
+                            </p>
+                            <p class="card-text d-flex align-items-center">
+                                <i class="bi bi-telephone me-2"></i> 
+                                <span><strong>Phone Number:</strong> {{PhoneNumber}}</span>
+                            </p>
+                            <p class="card-text d-flex align-items-center">
+                                <i class="bi bi-clock me-2"></i> 
+                                <span><strong>Opening Hour:</strong> {{OpeningHour}} - {{CloseHour}}</span>
+                            </p>
+                        </div>
+                        <div class="card-footer text-end">
+                            <button class="btn btn-sm btn-outline-primary">
+                                <i class="bi bi-clipboard me-1"></i> Booking
+                            </button>
+                            <button class="btn btn-sm btn-outline-secondary">
+                                <i class="bi bi-cart me-1"></i> Order Online
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            {{/each}}
+        </div>
+    </div>
+</div>
