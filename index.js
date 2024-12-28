@@ -45,6 +45,27 @@ app.get("/", async (req, res) => {
   });
 });
 
+app.get("/booking", (req, res) => {
+  res.render("booking", {
+    customCSS: ["online_booking.css"], // Include relevant CSS for booking
+  });
+});
+
+app.post("/booking", async (req, res) => {
+  const { name, date, time, details } = req.body;
+
+  try {
+    // Save the booking to the database
+    await db("bookings").insert({ name, date, time, details });
+    res.send("Booking successful!");
+  } catch (error) {
+    console.error("Error saving booking:", error);
+    res.status(500).send("An error occurred while processing your booking.");
+  }
+});
+
+app.use('/static', express.static('static'));
+
 app.listen(port, () => {
   console.log(`Server is running on http://localhost:${port}`);
 });
