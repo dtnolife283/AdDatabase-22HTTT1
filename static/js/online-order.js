@@ -16,12 +16,17 @@ placeOrder.addEventListener("click", async function () {
   if (!result.isConfirmed) {
     return;
   }
+  const requestBody = {
+    cart: cart,
+    membershipId: document.getElementById("membership-id").value,
+    branchId: document.getElementById("branch-id").value,
+  };
   const response = await fetch("/online-order/place-order", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
     },
-    body: JSON.stringify(cart),
+    body: JSON.stringify(requestBody),
   });
   const data = await response.json();
   if (response.ok) {

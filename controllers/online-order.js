@@ -31,10 +31,9 @@ const onlineOrderController = {
     const branchId = req.params.branchId;
     try {
       const branch = await db("BRANCH")
-        .select("*")
+        .select("ID_Area")
         .where("ID_Branch", branchId)
         .first();
-      const areaId = branch.ID_Area;
       const allFoods = await db("BRANCH_FOOD")
         .select("*")
         .where("ID_Branch", branchId)
@@ -46,8 +45,8 @@ const onlineOrderController = {
           '<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>',
         customCSS: ["online_user_home.css"],
         customJS: ["online-order.js"],
-        branch,
-        areaId,
+        branchId,
+        areaId: branch.ID_Area,
         allFoods,
       });
     } catch (err) {
@@ -56,10 +55,96 @@ const onlineOrderController = {
   },
   postOrder: async (req, res, next) => {
     try {
-      const cart = req.body;
-      console.log(cart);
+      // get the JSON data
+      const data = req.body;
+      // extract member id and branchid
+      const membershipId = data.membershipId;
+      const branchId = data.branchId;
+      // get discount percentage
+      const memberLevel = await db("MEMBERSHIP")
+        .join("MEM_LEVEL", "MEMBERSHIP.ID_Level", "=", "MEM_LEVEL.ID_Level")
+        .select("MEM_LEVEL.DiscountPercentages")
+        .where("MEMBERSHIP.ID_Card", membershipId)
+        .first();
+      const discountPercentages = memberLevel.DiscountPercentages;
+      // get customer id
+      const customer = await db("CUSTOMER")
+        .select("ID_Customer")
+        .where("ID_Card", membershipId)
+        .first();
+      // manually set the order id
+      const latestOrder = await db("ORDER").max("ID_Order as maxOrder").first();
+      const newOrderId = latestOrder.maxOrder + 1;
+      // create order
+      const newOrder = {
+        ID_Order: newOrderId,
+        ID_Table: null,
+        TotalPrice: 0,
+        ActualPrice: 0,
+        ID_Customer: customer ? customer.ID_Customer : null,
+        ID_Review: null,
+        ID_Employee: null,
+        ID_Branch: branchId,
+      };
+      // insert order to the order table
+      await db("ORDER").insert(newOrder);
+      // calculate the totalPrice and insert order foods
+      let totalPrice = 0;
+      const cart = data.cart;
+      for (const [key, value] of Object.entries(cart)) {
+        const foodId = key;
+        const quantity = value;
+
+        const branchFood = await db("BRANCH_FOOD")
+          .select("ID_BranchFood")
+          .where("ID_Food", foodId)
+          .where("ID_Branch", branchId)
+          .first();
+        if (!branchFood) {
+          throw new Error(`BranchFood ID not found for FoodID ${foodId}`);
+        }
+
+        const foodItem = await db("FOOD_ITEM")
+          .select("Price")
+          .where("ID_Food", foodId)
+          .first();
+        if (!foodItem) {
+          throw new Error(`Food item not found for FoodID ${foodId}`);
+        }
+
+        const foodPrice = Number(foodItem.Price);
+        totalPrice += foodPrice * quantity;
+        // create order food with current branchid and quantity for each food item
+        const orderFood = {
+          ID_BranchFood: branchFood.ID_BranchFood,
+          ID_Order: newOrderId,
+          Quantity: quantity,
+        };
+        // save orderfood
+        await db("ORDER_FOOD").insert(orderFood);
+      }
+      // calculate actual price based on membership level
+      const actualPrice = totalPrice - (totalPrice * discountPercentages) / 100;
+      // update total and actual price for order
+      await db("ORDER").where("ID_Order", newOrderId).update({
+        TotalPrice: totalPrice,
+        ActualPrice: actualPrice,
+      });
+
+      // create online order
+      const onlineOrder = {
+        ID_Online: newOrderId,
+        TimeOrder: db.raw("CAST(GETDATE() AS TIME)"),
+      };
+      // save online order
+      await db("ONLINE_ORDER").insert(onlineOrder);
+
+      console.log("Inserted new order!"); // process success
+      return res
+        .status(201)
+        .json({ message: "Order placed successfully", orderId: newOrderId });
     } catch (err) {
-      console.log(err);
+      return res.status(500).json({ message: err.message });
     }
   },
 };

@@ -20,6 +20,18 @@
             <span id="total-items-label">0</span></h5>
           <p class="card-text">Add more, or place your order.</p>
           <div class="d-grid gap-2">
+            <input
+              type="hidden"
+              name="branchId"
+              id="branch-id"
+              value="{{branchId}}"
+            />
+            <input
+              type="text"
+              id="membership-id"
+              class="form-control mt-2"
+              placeholder="Enter your membership ID"
+            />
             <button
               id="place-order"
               class="btn btn-primary"
