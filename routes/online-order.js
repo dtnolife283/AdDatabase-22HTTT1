@@ -9,4 +9,6 @@ router.get("/area/:areaId", onlineOrderController.getAreaPage);
 
 router.get("/branch/:branchId", onlineOrderController.getBranchPage);
 
+router.post("/place-order", onlineOrderController.postOrder);
+
 export default router;

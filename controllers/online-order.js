@@ -42,11 +42,22 @@ const onlineOrderController = {
         .join("FOOD_ITEM", "BRANCH_FOOD.ID_Food", "FOOD_ITEM.ID_Food");
 
       res.render("online-order/select-food", {
+        cdnJS:
+          '<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>',
         customCSS: ["online_user_home.css"],
+        customJS: ["online-order.js"],
         branch,
         areaId,
         allFoods,
       });
+    } catch (err) {
+      console.log(err);
+    }
+  },
+  postOrder: async (req, res, next) => {
+    try {
+      const cart = req.body;
+      console.log(cart);
     } catch (err) {
       console.log(err);
     }

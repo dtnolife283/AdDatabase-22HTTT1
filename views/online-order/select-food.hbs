@@ -1,19 +1,34 @@
 <main role="main">
   <section class="jumbotron text-center">
     <div class="container">
-      <h1 class="jumbotron-heading">Choose your restaurant</h1>
-      <p class="lead text-muted">Pick a restaurant near you, then place an
-        order!</p>
+      <h1 class="jumbotron-heading">Pick your items</h1>
+      <p class="lead text-muted">Choose your favorite food item, select the
+        quantity, and place your order!</p>
       <p>
         <a href="/online-order/area/{{areaId}}" class="btn btn-primary my-2">Go
           back</a>
-        <a href="/signup" class="btn btn-secondary my-2">Sign up</a>
       </p>
     </div>
   </section>
 
   <div class="album py-5 bg-light">
     <div class="container">
+      <div class="card mb-4">
+        <h5 class="card-header">Cart <i class="fa fa-shopping-cart"></i></h5>
+        <div class="card-body">
+          <h5 class="card-title">Total items:
+            <span id="total-items-label">0</span></h5>
+          <p class="card-text">Add more, or place your order.</p>
+          <div class="d-grid gap-2">
+            <button
+              id="place-order"
+              class="btn btn-primary"
+              disabled
+              type="button"
+            >Place your order</button>
+          </div>
+        </div>
+      </div>
       <div class="row">
         {{#each allFoods}}
           <div class="col-md-4">
@@ -25,12 +40,21 @@
                   VNĐ</p>
                 <div class="d-flex justify-content-between align-items-center">
                   <div class="btn-group">
-                    <a
+                    <button
+                      data-food-id="{{ID_Food}}"
                       type="button"
-                      class="btn btn-sm btn-outline-secondary"
-                    >Order</a>
+                      class="add-one btn btn-sm btn-outline-secondary"
+                    >+1</button>
+                    <button
+                      data-food-id="{{ID_Food}}"
+                      type="button"
+                      class="remove-one btn btn-sm btn-outline-secondary"
+                    >-1</button>
                   </div>
-                  <small class="text-muted">{{DeliverySafe}}</small>
+                  <small
+                    id="food-item-{{ID_Food}}"
+                    class="ml-2 text-info"
+                  >0</small>
                 </div>
               </div>
             </div>
@@ -39,5 +63,4 @@
       </div>
     </div>
   </div>
-
 </main>
