@@ -4,6 +4,7 @@ import path from "path";
 import { fileURLToPath } from "url";
 import knex from "knex";
 import dotenv from "dotenv";
+import onlineOrderRoutes from "./routes/online-order.js";
 import { get } from "http";
 
 dotenv.config();
@@ -31,14 +32,21 @@ app.engine(
     partialsDir: path.join(__dirname, "views", "partials"),
     layoutsDir: path.join(__dirname, "views", "layouts"),
     defaultLayout: "main",
+    helpers: {
+      formatCurrency: (value) => {
+        if (value) {
+          return value.toLocaleString("en-US");
+        }
+        return "0";
+      },
+    },
   })
 );
 
-
-app.set('view engine', 'hbs');
-app.set('views', path.join(__dirname, 'views'));
-app.use('/static', express.static(path.join(__dirname, 'static')));
-app.use(express.static(path.join(__dirname, 'static')));
+app.set("view engine", "hbs");
+app.set("views", path.join(__dirname, "views"));
+app.use("/static", express.static(path.join(__dirname, "static")));
+app.use(express.static(path.join(__dirname, "static")));
 app.use(express.urlencoded({ extended: true }));
 
 app.get("/", async (req, res) => {
@@ -66,7 +74,9 @@ app.post("/booking", async (req, res) => {
   }
 });
 
-app.use('/static', express.static('static'));
+app.use("/online-order", onlineOrderRoutes);
+
+app.use("/static", express.static("static"));
 
 app.listen(port, () => {
   console.log(`Server is running on http://localhost:${port}`);

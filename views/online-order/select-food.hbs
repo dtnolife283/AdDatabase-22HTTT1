@@ -1,0 +1,43 @@
+<main role="main">
+  <section class="jumbotron text-center">
+    <div class="container">
+      <h1 class="jumbotron-heading">Choose your restaurant</h1>
+      <p class="lead text-muted">Pick a restaurant near you, then place an
+        order!</p>
+      <p>
+        <a href="/online-order/area/{{areaId}}" class="btn btn-primary my-2">Go
+          back</a>
+        <a href="/signup" class="btn btn-secondary my-2">Sign up</a>
+      </p>
+    </div>
+  </section>
+
+  <div class="album py-5 bg-light">
+    <div class="container">
+      <div class="row">
+        {{#each allFoods}}
+          <div class="col-md-4">
+            <div class="card mb-4 box-shadow">
+              <div class="card-body">
+                <p class="cart-title"><strong>{{FoodName}}</strong></p>
+                <p class="card-text">
+                  <span class="text-success">{{formatCurrency Price}}</span>
+                  VNĐ</p>
+                <div class="d-flex justify-content-between align-items-center">
+                  <div class="btn-group">
+                    <a
+                      type="button"
+                      class="btn btn-sm btn-outline-secondary"
+                    >Order</a>
+                  </div>
+                  <small class="text-muted">{{DeliverySafe}}</small>
+                </div>
+              </div>
+            </div>
+          </div>
+        {{/each}}
+      </div>
+    </div>
+  </div>
+
+</main>
