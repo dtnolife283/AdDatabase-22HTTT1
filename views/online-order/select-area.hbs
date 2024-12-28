@@ -1,7 +1,7 @@
 <main role="main">
   <section class="jumbotron text-center">
     <div class="container">
-      <h1 class="jumbotron-heading">Choose your area</h1>
+      <h1 class="jumbotron-heading mt-3">Choose your area</h1>
       <p class="lead text-muted">Select an area near you and discover your next
         favourite spot!</p>
       <p>
@@ -10,20 +10,20 @@
     </div>
   </section>
 
-  <div class="album py-5 bg-light">
+  <div class="album py-5">
     <div class="container">
       <div class="row">
         {{#each allAreas}}
           <div class="col-md-4">
             <div class="card mb-4 box-shadow">
-              <img
+              {{! <img
                 class="card-img-top"
                 data-src="holder.js/100px225?theme=thumb&amp;bg=55595c&amp;fg=eceeef&amp;text=Thumbnail"
                 alt="Thumbnail [100%x225]"
                 style="height: 225px; width: 100%; display: block;"
                 src="https://img.goodfon.com/wallpaper/big/c/ba/gta-5-los-santos-rokstar-gorod.webp"
                 data-holder-rendered="true"
-              />
+              /> }}
               <div class="card-body">
                 <p class="cart-title"><strong>{{AreaName}}</strong></p>
                 <p class="card-text">Beautiful area, come eat.</p>
@@ -33,7 +33,7 @@
                       href="/online-order/area/{{ID_Area}}"
                       type="button"
                       class="btn btn-sm btn-outline-secondary"
-                    >View</a>
+                    >Select</a>
                   </div>
                 </div>
               </div>
