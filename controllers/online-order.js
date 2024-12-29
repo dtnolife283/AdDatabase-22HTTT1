@@ -66,7 +66,7 @@ const onlineOrderController = {
         .select("MEM_LEVEL.DiscountPercentages")
         .where("MEMBERSHIP.ID_Card", membershipId)
         .first();
-      const discountPercentages = memberLevel.DiscountPercentages;
+      const discountPercentages = memberLevel?.DiscountPercentages;
       // get customer id
       const customer = await db("CUSTOMER")
         .select("ID_Customer")
@@ -124,7 +124,10 @@ const onlineOrderController = {
         await db("ORDER_FOOD").insert(orderFood);
       }
       // calculate actual price based on membership level
-      const actualPrice = totalPrice - (totalPrice * discountPercentages) / 100;
+
+      const actualPrice = discountPercentages
+        ? totalPrice - (totalPrice * discountPercentages) / 100
+        : totalPrice;
       // update total and actual price for order
       await db("ORDER").where("ID_Order", newOrderId).update({
         TotalPrice: totalPrice,
