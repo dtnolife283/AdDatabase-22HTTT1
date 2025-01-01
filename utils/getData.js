@@ -26,7 +26,7 @@ class GetData {
             return db("BRANCH as b")
                 .join("PARKING as p", "b.ID_Branch", "p.ID_Branch")
                 .where("p.ParkingType", parking)
-                .distinct("b.*");
+                .distinct("b.*"); 
 
         if (area != 'all' && parking != 'none' && parking != 'all')
             return db("BRANCH as b")
@@ -41,6 +41,23 @@ class GetData {
                 .select("b.*");
 
         return db("BRANCH").select("*");
+    }
+
+    async getFoodItems() {
+        return db("FOOD_ITEM").select(
+            "ID_Food",
+            "FoodName",
+        );
+    }
+
+    async getBranchesByFoodItem(food = 'all') {
+        if (food === 'all' || food === undefined)
+            return db("BRANCH").select("*");
+        return db("BRANCH_FOOD as bf")
+            .join("BRANCH as b", "bf.ID_Branch", "b.ID_Branch")
+            .join("FOOD_ITEM as f", "bf.ID_Food", "f.ID_Food")
+            .where("f.ID_Food", food)
+            .distinct("b.ID_Branch");
     }
 }
 

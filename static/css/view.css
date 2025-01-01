@@ -91,6 +91,10 @@
     border-color: #AB886D;
 }
 
+.filter-item #food-item {
+    width: 300px;
+}
+
 .filter-item select option {
     background-color: #E4E0E1;
     color: #493628;

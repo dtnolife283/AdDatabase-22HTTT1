@@ -2,13 +2,9 @@ import express from "express";
 import { engine } from "express-handlebars";
 import path from "path";
 import { fileURLToPath } from "url";
-import knex from "knex";
-import dotenv from "dotenv";
 import onlineOrderRoutes from "./routes/online-order.js";
 import viewRoutes from "./routes/view.js";
-
-
-dotenv.config();
+import Handlebars from "handlebars";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -32,6 +28,10 @@ app.engine(
     },
   })
 );
+
+Handlebars.registerHelper("eq", function (a, b) {
+  return a == b;
+});
 
 app.use(express.json());
 app.set("view engine", "hbs");

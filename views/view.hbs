@@ -10,28 +10,37 @@
 </div>
 <div class="container mt-4">
     <div class="filter-content hide ms-3 me-3">
-        <form action="/view" method="get">
+        <form action="/online/view" method="get">
             <div class="filter-item">
                 <label for="area">Area</label>
                 <select name="area" id="area">
-                    <option value="all">All</option>
+                    <option value="all" selected>All</option>
                     {{#each areas}}
-                        <option value="{{ID_Area}}">{{AreaName}}</option>
+                        <option value="{{ID_Area}}" {{#if (eq ../selectedArea ID_Area)}}selected{{/if}}>{{AreaName}}</option>
                     {{/each}}
                 </select>
             </div>
             <div class="filter-item">
                 <label for="parking">Parking</label>
                 <select name="parking" id="parking">
+                    <option value="all" selected>All</option>
+                    <option value="1" {{#if (eq selectedParking 1)}}selected{{/if}}>Cars</option>
+                    <option value="0" {{#if (eq selectedParking 0)}}selected{{/if}}>Motorbikes</option>
+                    <option value="none" {{#if (eq selectedParking 'none')}}selected{{/if}}>None</option>
+                </select>
+            </div>
+            <div class="filter-item">
+                <label for="food-item">Food Item</label>
+                <select name="food" id="food-item">
                     <option value="all">All</option>
-                    <option value="1">Cars</option>
-                    <option value="0">Motorbikes</option>
-                    <option value="none">None</option>
+                    {{#each foods}}
+                        <option value="{{ID_Food}}" {{#if (eq ../selectedFood ID_Food)}}selected{{/if}}>{{FoodName}}</option>
+                    {{/each}}
                 </select>
             </div>
             <div class="filter-actions">
                 <button type="submit">Apply Filter</button>
-                <button type="reset">Reset</button>
+                <button type="button" id="reset-filters">Reset</button>
             </div>
         </form>
     </div>
