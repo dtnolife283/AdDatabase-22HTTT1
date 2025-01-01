@@ -12,53 +12,37 @@
                 <h1 class="text-white mb-4">Book A Table Online</h1>
                 <form id="bookingForm">
                     <div class="row g-3">
-                        <!-- Filters Section -->
-                        <div class="col-md-4">
-                            <div class="form-floating">
-                                <select class="form-select" id="areaSelect">
-                                    <option value="all">All Areas</option>
-                                </select>
-                                <label for="areaSelect">Area</label>
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="form-floating">
-                                <select class="form-select" id="parkingSelect">
-                                    <option value="all">All Parking</option>
-                                    <option value="none">No Parking</option>
-                                    <option value="free">Free Parking</option>
-                                    <option value="paid">Paid Parking</option>
-                                </select>
-                                <label for="parkingSelect">Parking</label>
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="form-floating">
-                                <select class="form-select" id="foodSelect">
-                                    <option value="all">All Items</option>
-                                </select>
-                                <label for="foodSelect">Food Items</label>
-                            </div>
-                        </div>
-
                         <!-- Branch Selection -->
                         <div class="col-md-12">
                             <div class="form-floating">
                                 <select class="form-select" id="branchSelect" required>
                                     <option value="">Select a Branch</option>
+                                    <option value="1">Worry Sushi Haven</option>
+                                    <option value="2">Green Sushi Garden</option>
+                                    <option value="3">Key Sushi Spot</option>
+                                    <option value="4">Would Sushi Hub</option>
+                                    <option value="5">May Sushi Bar</option>
+                                    <option value="6">Baby Sushi Haven</option>
+                                    <option value="7">Technology Sushi Bay</option>
+                                    <option value="8">They Sushi Bar</option>
+                                    <option value="9">Character Sushi Hub</option>
+                                    <option value="10">Campaign Sushi Bar</option>
+                                    <option value="11">Season Sushi Bar</option>
+                                    <option value="12">Class Sushi Hub</option>
+                                    <option value="13">Wind Sushi Garden</option>
+                                    <option value="14">Garden Sushi Factory</option>
+                                    <option value="15">Increase Sushi Palace</option>
                                 </select>
                                 <label for="branchSelect">Select Branch</label>
                             </div>
                         </div>
-
                         <div class="col-md-12">
                             <div class="branch-info mt-2 text-white" style="display: none;">
                                 <p>Branch Phone: <span id="branchPhone"></span></p>
                             </div>
                         </div>
-
                         <!-- Customer Information -->
-                        <div class="col-md-6">
+                        <div class="col-md-12">
                             <div class="form-floating">
                                 <input type="text" class="form-control" id="name" placeholder="Your Name" required>
                                 <label for="name">Your Name</label>
@@ -72,12 +56,6 @@
                         </div>
                         <div class="col-md-6">
                             <div class="form-floating">
-                                <input type="text" class="form-control datetimepicker-input" id="datetime" placeholder="Date & Time" required>
-                                <label for="datetime">DateTime (MM/DD/YY HH:MM)</label>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-floating">
                                 <select class="form-select" id="peopleCount" required>
                                     <option value="1">1 Person</option>
                                     <option value="2">2 People</option>
@@ -87,6 +65,18 @@
                                     <option value="6">6+ People</option>
                                 </select>
                                 <label for="peopleCount">Number of People</label>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-floating">
+                                <input type="text" class="form-control" id="date" placeholder="Date" required>
+                                <label for="date">Date (MM/DD/YY)</label>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-floating">
+                                <input type="text" class="form-control" id="time" placeholder="Time" required>
+                                <label for="time">Time (HH:MM)</label>
                             </div>
                         </div>
                         <div class="col-12">
@@ -104,3 +94,40 @@
         </div>
     </div>
 </div>
+
+<script>
+    // Map of branch IDs to phone numbers
+    const branchPhones = {
+        "1": "5902063219",
+        "2": "3544151022",
+        "3": "8109498536",
+        "4": "5108579373",
+        "5": "4688214055",
+        "6": "4370030239",
+        "7": "8084299863",
+        "8": "2556609985",
+        "9": "7976829002",
+        "10": "5796685720",
+        "11": "2975107473",
+        "12": "3527204564",
+        "13": "0474557420",
+        "14": "1232610960",
+        "15": "2112788454",
+
+    };
+
+    // Event listener for branch selection
+    document.getElementById("branchSelect").addEventListener("change", function () {
+        const selectedBranch = this.value;
+        const branchInfoDiv = document.querySelector(".branch-info");
+        const branchPhoneSpan = document.getElementById("branchPhone");
+
+        if (selectedBranch && branchPhones[selectedBranch]) {
+            branchPhoneSpan.textContent = branchPhones[selectedBranch];
+            branchInfoDiv.style.display = "block";
+        } else {
+            branchPhoneSpan.textContent = "";
+            branchInfoDiv.style.display = "none";
+        }
+    });
+</script>
