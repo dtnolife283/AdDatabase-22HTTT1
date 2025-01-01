@@ -72,7 +72,7 @@ function populateBillModal(bill, orderId) {
     <h6>Actual Price (after discount): ${actualPrice} VNĐ</h6>`;
 
   const reviewLink = document.getElementById("review-link");
-  reviewLink.href = `/online/review/${orderId}`;
+  reviewLink.href = `/online/online-order/review/${orderId}`;
 }
 
 document.querySelector(".row").addEventListener("click", function (e) {
