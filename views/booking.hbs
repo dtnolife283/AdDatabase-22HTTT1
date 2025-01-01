@@ -1,7 +1,7 @@
 <div class="booking-section">
-  <div class="overlay"></div>
-  <img src="/static/picture/booking-background.jpg" alt="Sushi" class="background-image" />
-  <h1 class="booking-text">Booking</h1>
+    <div class="overlay"></div>
+    <img src="/static/picture/booking-background.jpg" alt="Sushi" class="background-image" />
+    <h1 class="booking-text">Booking</h1>
 </div>
 
 <div class="container py-5">
@@ -10,40 +10,88 @@
             <div class="p-5 wow fadeInUp">
                 <h5 class="section-title ff-secondary text-start text-primary fw-normal">Reservation</h5>
                 <h1 class="text-white mb-4">Book A Table Online</h1>
-                <form>
+                <form id="bookingForm">
                     <div class="row g-3">
+                        <!-- Filters Section -->
+                        <div class="col-md-4">
+                            <div class="form-floating">
+                                <select class="form-select" id="areaSelect">
+                                    <option value="all">All Areas</option>
+                                </select>
+                                <label for="areaSelect">Area</label>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-floating">
+                                <select class="form-select" id="parkingSelect">
+                                    <option value="all">All Parking</option>
+                                    <option value="none">No Parking</option>
+                                    <option value="free">Free Parking</option>
+                                    <option value="paid">Paid Parking</option>
+                                </select>
+                                <label for="parkingSelect">Parking</label>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-floating">
+                                <select class="form-select" id="foodSelect">
+                                    <option value="all">All Items</option>
+                                </select>
+                                <label for="foodSelect">Food Items</label>
+                            </div>
+                        </div>
+
+                        <!-- Branch Selection -->
+                        <div class="col-md-12">
+                            <div class="form-floating">
+                                <select class="form-select" id="branchSelect" required>
+                                    <option value="">Select a Branch</option>
+                                </select>
+                                <label for="branchSelect">Select Branch</label>
+                            </div>
+                        </div>
+
+                        <div class="col-md-12">
+                            <div class="branch-info mt-2 text-white" style="display: none;">
+                                <p>Branch Phone: <span id="branchPhone"></span></p>
+                            </div>
+                        </div>
+
+                        <!-- Customer Information -->
                         <div class="col-md-6">
                             <div class="form-floating">
-                                <input type="text" class="form-control" id="name" placeholder="Your Name">
+                                <input type="text" class="form-control" id="name" placeholder="Your Name" required>
                                 <label for="name">Your Name</label>
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-floating">
-                                <input type="email" class="form-control" id="email" placeholder="Your Email">
+                                <input type="email" class="form-control" id="email" placeholder="Your Email" required>
                                 <label for="email">Your Email</label>
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-floating">
-                                <input type="text" class="form-control datetimepicker-input" id="datetime" placeholder="Date & Time">
+                                <input type="text" class="form-control datetimepicker-input" id="datetime" placeholder="Date & Time" required>
                                 <label for="datetime">DateTime (MM/DD/YY HH:MM)</label>
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-floating">
-                                <select class="form-select" id="select1">
+                                <select class="form-select" id="peopleCount" required>
                                     <option value="1">1 Person</option>
                                     <option value="2">2 People</option>
                                     <option value="3">3 People</option>
-                                    <option value="4">4+ People</option>
+                                    <option value="4">4 People</option>
+                                    <option value="5">5 People</option>
+                                    <option value="6">6+ People</option>
                                 </select>
-                                <label for="select1">Numbers Of People</label>
+                                <label for="peopleCount">Number of People</label>
                             </div>
                         </div>
                         <div class="col-12">
                             <div class="form-floating">
-                                <textarea class="form-control" placeholder="Special Request" id="message" style="height: 120px"></textarea>
+                                <textarea class="form-control" placeholder="Special Request" id="message" style="height: 120px; resize: none;"></textarea>
                                 <label for="message">Special Request</label>
                             </div>
                         </div>
