@@ -1,0 +1,64 @@
+<div class="container mt-4">
+    <div class="filter ms-3 me-3">
+        <span class="filter-name">Menu</span>
+        <button class="filter-button">
+            <span class="filter-icon">
+                <ion-icon name="filter-circle-outline"></ion-icon>
+            </span>
+        </button>
+    </div>
+</div>
+<div class="container mt-4">
+    <div class="filter-content hide ms-3 me-3">
+        <form action="/online/menu" method="get">
+            <div class="filter-item">
+                <label for="food-type">Food Type</label>
+                <select name="type" id="food-type">
+                    <option value="all" selected>All</option>
+                    {{#each foodTypes}}
+                        <option value="{{ID_Type}}" {{#if (eq ../selectedType ID_Type)}}selected{{/if}}>{{TypeName}}</option>
+                    {{/each}}
+                </select>
+            </div>
+            <div class="filter-actions">
+                <button type="submit">Apply Filter</button>
+                <button type="button" id="reset-filters">Reset</button>
+            </div>
+        </form>
+    </div>
+</div>
+<div class="container mt-4">
+    <div class="food ms-3 me-3">
+        <div class="row g-4">
+            {{#each foods}}
+                <div class="col-md-4 col-sm-6">
+                    <div class="card h-100 shadow-sm">
+                        <div class="card-body">
+                            <span class="badge bg-info mb-2 p-2">
+                                <i class="bi bi-clipboard-fill"></i> {{TypeName}}
+                            </span>
+                            <h5 class="card-title">
+                                <i class="fa-solid fa-utensils"></i> {{FoodName}}
+                            </h5>
+                            <p class="card-text">
+                                <strong>
+                                    <i class="fa-solid fa-tag"></i> Price:
+                                </strong> {{Price}} <br>
+                                <strong>
+                                    <i class="fa-solid fa-truck"></i> Delivery:
+                                </strong>
+                                <span>
+                                    {{#if (eq DeliverySafe 1)}}
+                                        <i class="fa-solid fa-circle-check text-success"></i> Yes
+                                    {{else}}
+                                        <i class="fa-solid fa-circle-xmark text-danger"></i> No
+                                    {{/if}}
+                                </span>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            {{/each}}
+        </div>
+    </div>
+</div>

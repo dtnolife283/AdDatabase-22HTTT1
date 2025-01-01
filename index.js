@@ -4,6 +4,7 @@ import path from "path";
 import { fileURLToPath } from "url";
 import onlineOrderRoutes from "./routes/online-order.js";
 import viewRoutes from "./routes/view.js";
+import menuRoutes from "./routes/menu.js";
 import Handlebars from "handlebars";
 
 const __filename = fileURLToPath(import.meta.url);
@@ -77,7 +78,7 @@ app.post("/booking", async (req, res) => {
 });
 
 app.use("/online/view", viewRoutes);
-
+app.use("/online/menu", menuRoutes); 
 app.use("/online/online-order", onlineOrderRoutes);
 
 
