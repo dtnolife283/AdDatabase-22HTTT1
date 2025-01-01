@@ -60,7 +60,7 @@ app.get("/online", async (req, res) => {
 
 app.get("/online/booking", (req, res) => {
   res.render("booking", {
-    customCSS: ["online_booking.css"], // Include relevant CSS for booking
+    customCSS: ["online_booking.css", "online_user_home.css"], // Include relevant CSS for booking
   });
 });
 
