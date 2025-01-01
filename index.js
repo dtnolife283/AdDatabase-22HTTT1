@@ -34,6 +34,10 @@ Handlebars.registerHelper("eq", function (a, b) {
   return a == b;
 });
 
+Handlebars.registerHelper("neq", function (a, b) {
+  return a != b;
+});
+
 app.use(express.json());
 app.set("view engine", "hbs");
 app.set("views", path.join(__dirname, "views"));
