@@ -5,8 +5,10 @@
       <p class="lead text-muted">Choose your favorite food item, select the
         quantity, and place your order!</p>
       <p>
-        <a href="/online/online-order/area/{{areaId}}" class="btn btn-primary my-2">Go
-          back</a>
+        <a
+          href="/online/online-order/area/{{areaId}}"
+          class="btn btn-primary my-2"
+        >Go back</a>
       </p>
     </div>
   </section>
@@ -72,6 +74,53 @@
             </div>
           </div>
         {{/each}}
+      </div>
+    </div>
+  </div>
+
+  <div
+    class="modal fade"
+    id="billModal"
+    tabindex="-1"
+    aria-labelledby="billModalLabel"
+    aria-hidden="true"
+  >
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="billModalLabel">Your Bill</h5>
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+          ></button>
+        </div>
+        <div class="modal-body">
+          <table class="table">
+            <thead>
+              <tr>
+                <th scope="col">Item</th>
+                <th scope="col">Price per Item (VNĐ)</th>
+                <th scope="col">Quantity</th>
+                <th scope="col">Total (VNĐ)</th>
+              </tr>
+            </thead>
+            <tbody>
+              <!-- Populate rows dynamically here -->
+            </tbody>
+          </table>
+          <div class="text-end">
+          </div>
+        </div>
+        <div class="modal-footer">
+          <a id="review-link" class="btn btn-primary">Proceed to Review</a>
+          <button
+            type="button"
+            class="btn btn-secondary"
+            data-bs-dismiss="modal"
+          >Close</button>
+        </div>
       </div>
     </div>
   </div>

@@ -90,10 +90,14 @@ const onlineOrderController = {
       await db("ORDER").insert(newOrder);
       // calculate the totalPrice and insert order foods
       let totalPrice = 0;
+      let totalAmount = 0;
+      const orderFoods = [];
       const cart = data.cart;
       for (const [key, value] of Object.entries(cart)) {
         const foodId = key;
         const quantity = value;
+
+        totalAmount += quantity;
 
         const branchFood = await db("BRANCH_FOOD")
           .select("ID_BranchFood")
@@ -105,7 +109,7 @@ const onlineOrderController = {
         }
 
         const foodItem = await db("FOOD_ITEM")
-          .select("Price")
+          .select("Price", "FoodName")
           .where("ID_Food", foodId)
           .first();
         if (!foodItem) {
@@ -113,15 +117,24 @@ const onlineOrderController = {
         }
 
         const foodPrice = Number(foodItem.Price);
-        totalPrice += foodPrice * quantity;
+        const amountPrice = foodPrice * quantity;
+        totalPrice += amountPrice;
         // create order food with current branchid and quantity for each food item
         const orderFood = {
           ID_BranchFood: branchFood.ID_BranchFood,
           ID_Order: newOrderId,
           Quantity: quantity,
         };
+
+        const orderFoodBill = {
+          price: foodPrice,
+          foodName: foodItem.FoodName,
+          quantity,
+          amountPrice,
+        };
         // save orderfood
         await db("ORDER_FOOD").insert(orderFood);
+        orderFoods.push(orderFoodBill);
       }
       // calculate actual price based on membership level
 
@@ -143,9 +156,16 @@ const onlineOrderController = {
       await db("ONLINE_ORDER").insert(onlineOrder);
 
       console.log("Inserted new order!"); // process success
-      return res
-        .status(201)
-        .json({ message: "Order placed successfully", orderId: newOrderId });
+      return res.status(201).json({
+        message: "Order placed successfully",
+        orderId: newOrderId,
+        bill: JSON.stringify({
+          totalAmount,
+          totalPrice,
+          actualPrice,
+          orderFoods,
+        }),
+      });
     } catch (err) {
       return res.status(500).json({ message: err.message });
     }

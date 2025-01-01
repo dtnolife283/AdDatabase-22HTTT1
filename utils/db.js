@@ -8,7 +8,7 @@ export const db = knex({
   connection: {
     server: process.env.SERVER,
     database: process.env.DATABASE,
-    user: process.env.USER || process.env.USERNAME,
+    user: process.env.USERNAME || process.env.USER,
     password: process.env.PASSWORD,
     options: {
       port: parseInt(process.env.PORT),

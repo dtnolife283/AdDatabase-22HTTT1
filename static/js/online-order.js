@@ -21,7 +21,7 @@ placeOrder.addEventListener("click", async function () {
     membershipId: document.getElementById("membership-id").value,
     branchId: document.getElementById("branch-id").value,
   };
-  const response = await fetch("/online-order/place-order", {
+  const response = await fetch("/online/online-order/place-order", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -30,12 +30,11 @@ placeOrder.addEventListener("click", async function () {
   });
   const data = await response.json();
   if (response.ok) {
-    Swal.fire({
-      icon: "success",
-      title: "Order placed successfully",
-      text: `Your order ID is ${data.orderId}`,
-    });
-    window.reload();
+    const bill = JSON.parse(data.bill);
+    const orderId = data.orderId;
+    populateBillModal(bill, orderId);
+    const billModal = new bootstrap.Modal(document.getElementById("billModal"));
+    billModal.show();
   } else {
     Swal.fire({
       icon: "error",
@@ -44,6 +43,35 @@ placeOrder.addEventListener("click", async function () {
     });
   }
 });
+
+function populateBillModal(bill, orderId) {
+  const tableBody = document.querySelector("#billModal tbody");
+  const totalQuantity = bill.totalAmount;
+  const totalPrice = bill.totalPrice.toLocaleString();
+  const actualPrice = bill.actualPrice.toLocaleString();
+
+  tableBody.innerHTML = ""; // Clear previous data
+
+  bill.orderFoods.forEach((orderFood) => {
+    const row = `
+      <tr>
+        <td>${orderFood.foodName}</td>
+        <td>${orderFood.price}</td>
+        <td>${orderFood.quantity}</td>
+        <td>${orderFood.amountPrice.toLocaleString()}</td>
+      </tr>`;
+    tableBody.innerHTML += row;
+  });
+
+  const totalInfo = document.querySelector("#billModal .text-end");
+  totalInfo.innerHTML = `
+    <h6>Total Quantity: ${totalQuantity}</h6>
+    <h6>Total Price: ${totalPrice} VNĐ</h6>
+    <h6>Actual Price (after discount): ${actualPrice} VNĐ</h6>`;
+
+  const reviewLink = document.getElementById("review-link");
+  reviewLink.href = `/online/review/${orderId}`;
+}
 
 document.querySelector(".row").addEventListener("click", function (e) {
   const foodId = e.target.dataset.foodId;
