@@ -120,3 +120,7 @@ header a {
 .custom-border-color {
     border-color: var(--secondary-color-1) !important;
 }
+
+.active {
+    color: var(--secondary-color-1) !important;
+}

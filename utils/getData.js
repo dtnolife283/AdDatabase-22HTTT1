@@ -50,6 +50,27 @@ class GetData {
         );
     }
 
+    async getFoodTypes() {
+        return db("FOOD_TYPE").select("*");
+    }
+
+    async getFoodItemsDetail(type = 'all') {
+        if (type === 'all' || type === undefined)
+            return db('FOOD_ITEM as f')
+                .join('FOOD_TYPE as ft', 'f.ID_Type', 'ft.ID_Type')
+                .select(
+                    'f.*',
+                    'ft.TypeName'
+                ); 
+        return db('FOOD_ITEM as f')
+            .join('FOOD_TYPE as ft', 'f.ID_Type', 'ft.ID_Type')
+            .where('ft.ID_Type', type)
+            .select(
+                'f.*',
+                'ft.TypeName'
+            );
+    }
+
     async getBranchesByFoodItem(food = 'all') {
         if (food === 'all' || food === undefined)
             return db("BRANCH").select("*");
