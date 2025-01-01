@@ -186,7 +186,7 @@ const onlineOrderController = {
         order,
         pageTitle: "Review",
         customCSS: ["review.css", "online_user_home.css"],
-        customJS: ["review.js"],
+        customJS: ["review.js"], //css and js
         cdnJS:
           '<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>',
       });
@@ -195,8 +195,27 @@ const onlineOrderController = {
     }
   },
   postReviewPage: async (req, res, next) => {
-    const { service, food, branch, price, reviewText } = req.body;
-    console.log(service, food, branch, price, reviewText);
+    const orderId = req.params.orderId;
+    const { service, food, branch, price, reviewText, order } = req.body;
+    console.log(service, food, branch, price, reviewText, order);
+    try {
+      const latestReview = await db("REVIEW").max("ID_Review as ID").first();
+      const newReviewId = latestReview.ID + 1;
+      await db("REVIEW").insert({
+        ID_Review: newReviewId,
+        ServiceScore: Number(service),
+        FoodScore: Number(food),
+        BranchScore: Number(branch),
+        PriceScore: Number(price),
+        Comment: reviewText,
+      });
+      await db("ORDER").where("ID_Order", orderId).update({
+        ID_Review: newReviewId,
+      });
+      res.status(201).redirect(req.originalUrl);
+    } catch (err) {
+      return res.status(500).json({ message: err.message });
+    }
   },
 };
 

@@ -82,9 +82,8 @@ app.post("/booking", async (req, res) => {
 });
 
 app.use("/online/view", viewRoutes);
-app.use("/online/menu", menuRoutes); 
+app.use("/online/menu", menuRoutes);
 app.use("/online/online-order", onlineOrderRoutes);
-
 
 app.listen(port, () => {
   console.log(`Server is running on http://localhost:${port}`);
