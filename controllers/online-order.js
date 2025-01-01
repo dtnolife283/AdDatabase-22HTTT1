@@ -5,7 +5,7 @@ const onlineOrderController = {
     try {
       const allAreas = await db("AREA").select("*");
       res.render("online-order/select-area", {
-        customCSS: ["online_user_home.css"],
+        customCSS: ["online_user_home.css", "view.css"],
         allAreas,
       });
     } catch (err) {
@@ -19,8 +19,13 @@ const onlineOrderController = {
         .select("*")
         .where("ID_Area", areaId);
 
+      allBranches.forEach((branch) => {
+        branch.OpeningHour = branch.OpeningHour.toISOString().slice(11, 16);
+        branch.CloseHour = branch.CloseHour.toISOString().slice(11, 16);
+      });
+
       res.render("online-order/select-branch", {
-        customCSS: ["online_user_home.css"],
+        customCSS: ["online_user_home.css", "view.css"],
         allBranches,
       });
     } catch (err) {

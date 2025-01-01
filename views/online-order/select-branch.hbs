@@ -10,33 +10,46 @@
     </div>
   </section>
 
-  <div class="album py-5">
-    <div class="container">
+  <div class="container mt-4">
+    <div class="branch ms-3 me-3">
       <div class="row">
         {{#each allBranches}}
-          <div class="col-md-4">
-            <div class="card mb-4 box-shadow">
-              {{! <img
-                class="card-img-top"
-                data-src="holder.js/100px225?theme=thumb&amp;bg=55595c&amp;fg=eceeef&amp;text=Thumbnail"
-                alt="Thumbnail [100%x225]"
-                style="height: 225px; width: 100%; display: block;"
-                src="https://dynamic-media-cdn.tripadvisor.com/media/photo-o/2a/a2/dc/9b/the-log-interior.jpg?w=900&h=500&s=1"
-                data-holder-rendered="true"
-              /> }}
-              <div class="card-body">
-                <p class="cart-title"><strong>{{BranchName}}</strong></p>
-                <p class="card-text">{{Address}}</p>
-                <div class="d-flex justify-content-between align-items-center">
-                  <div class="btn-group">
-                    <a
-                      href="/online/online-order/branch/{{ID_Branch}}"
-                      type="button"
-                      class="btn btn-sm btn-outline-secondary"
-                    >Select</a>
-                  </div>
-                  <small class="text-muted">+{{PhoneNumber}}</small>
-                </div>
+          <div class="col-md-6">
+            <div class="branch-item card mb-4 shadow">
+              <div class="card-body" id="{{ID_Branch}}">
+                <h5 class="card-title text-primary">
+                  <ion-icon name="storefront-outline"></ion-icon>
+                  <a
+                    href="/online/online-order/branch/{{ID_Branch}}"
+                    style="text-decoration: none; color: black"
+                  >
+                    {{BranchName}}
+                  </a>
+                </h5>
+                <p class="card-text d-flex align-items-center">
+                  <i class="bi bi-geo me-2"></i>
+                  <span><strong>Address:</strong> {{Address}}</span>
+                </p>
+                <p class="card-text d-flex align-items-center">
+                  <i class="bi bi-telephone me-2"></i>
+                  <span><strong>Phone Number:</strong> {{PhoneNumber}}</span>
+                </p>
+                <p class="card-text d-flex align-items-center">
+                  <i class="bi bi-clock me-2"></i>
+                  <span><strong>Opening Hour:</strong>
+                    {{OpeningHour}}
+                    -
+                    {{CloseHour}}</span>
+                </p>
+              </div>
+              <div class="card-footer text-end">
+                <a
+                  href="/online/online-order/branch/{{ID_Branch}}"
+                  class="btn btn-sm btn-outline-primary"
+                >
+                  <i class="bi bi-clipboard me-1"></i>
+                  Select
+                </a>
               </div>
             </div>
           </div>
