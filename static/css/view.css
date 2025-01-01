@@ -166,7 +166,7 @@
     border-top: 1px solid var(--secondary-color-3);
 }
 
-button.btn {
+a.btn {
     background-color: var(--primary-btn-color);
     color: var(--text-color);
     border: 1px solid var(--text-color);
@@ -177,12 +177,12 @@ button.btn {
     transition: background-color 0.3s ease;
 }
 
-button.btn-outline-primary:hover {
+a.btn-outline-primary:hover {
     background-color: var(--primary-btn-hover-color);
     border: 1px solid var(--text-color);
 }
 
-button.btn-outline-secondary:hover {
+a.btn-outline-secondary:hover {
     background-color: var(--secondary-color-3);
     color: var(--background-color);
     border: 1px solid var(--text-color);

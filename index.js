@@ -40,13 +40,24 @@ app.use("/static", express.static(path.join(__dirname, "static")));
 app.use(express.static(path.join(__dirname, "static")));
 app.use(express.urlencoded({ extended: true }));
 
-app.get("/", async (req, res) => {
+app.get("/", (req, res) => {
+  res.redirect("/select-user");
+});
+
+app.get("/select-user", (req, res) => {
+  res.render("selectUser", {
+    layout: false,
+    customCSS: ["selectUser.css", "online_user_home.css"],
+  });
+});
+
+app.get("/online", async (req, res) => {
   res.render("home", {
     customCSS: ["online_user_home.css"],
   });
 });
 
-app.get("/booking", (req, res) => {
+app.get("/online/booking", (req, res) => {
   res.render("booking", {
     customCSS: ["online_booking.css"], // Include relevant CSS for booking
   });
@@ -65,11 +76,10 @@ app.post("/booking", async (req, res) => {
   }
 });
 
-app.use("/view", viewRoutes);
+app.use("/online/view", viewRoutes);
 
-app.use("/online-order", onlineOrderRoutes);
+app.use("/online/online-order", onlineOrderRoutes);
 
-app.use("/static", express.static("static"));
 
 app.listen(port, () => {
   console.log(`Server is running on http://localhost:${port}`);
