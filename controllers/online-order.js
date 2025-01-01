@@ -104,6 +104,7 @@ const onlineOrderController = {
           .where("ID_Food", foodId)
           .where("ID_Branch", branchId)
           .first();
+
         if (!branchFood) {
           throw new Error(`BranchFood ID not found for FoodID ${foodId}`);
         }
@@ -112,12 +113,14 @@ const onlineOrderController = {
           .select("Price", "FoodName")
           .where("ID_Food", foodId)
           .first();
+
         if (!foodItem) {
           throw new Error(`Food item not found for FoodID ${foodId}`);
         }
-
+        // get price of food item and calculate amount price
         const foodPrice = Number(foodItem.Price);
         const amountPrice = foodPrice * quantity;
+        // add amount price to total price
         totalPrice += amountPrice;
         // create order food with current branchid and quantity for each food item
         const orderFood = {
@@ -125,7 +128,7 @@ const onlineOrderController = {
           ID_Order: newOrderId,
           Quantity: quantity,
         };
-
+        // this one is for displaying the bill
         const orderFoodBill = {
           price: foodPrice,
           foodName: foodItem.FoodName,

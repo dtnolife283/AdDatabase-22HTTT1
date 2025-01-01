@@ -52,6 +52,8 @@ function populateBillModal(bill, orderId) {
 
   tableBody.innerHTML = ""; // Clear previous data
 
+  document.querySelector(".modal-title").innerText = `Your Bill - #${orderId}`;
+
   bill.orderFoods.forEach((orderFood) => {
     const row = `
       <tr>
