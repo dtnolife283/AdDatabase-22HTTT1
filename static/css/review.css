@@ -1,0 +1,9 @@
+.star-rating i {
+  font-size: 2rem;
+  color: #ddd;
+  cursor: pointer;
+}
+
+.star-rating i.active {
+  color: #ffdf00 !important;
+}

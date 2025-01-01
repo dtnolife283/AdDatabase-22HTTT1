@@ -1,0 +1,73 @@
+<div class="container col-lg-8 my-5 bg-light p-4">
+  {{#if order}}
+    {{#if order.ID_Review}}
+      <div class="lead text-center">You have already left a review for this order</div>
+    {{else}}
+      <h2>Leave a Review</h2>
+      <form action="" method="POST">
+        <div class="mb-3">
+          <label for="service" class="form-label">Service</label>
+          <div id="service" class="star-rating">
+            <i class="fa fa-star" data-value="1"></i>
+            <i class="fa fa-star" data-value="2"></i>
+            <i class="fa fa-star" data-value="3"></i>
+            <i class="fa fa-star" data-value="4"></i>
+            <i class="fa fa-star" data-value="5"></i>
+          </div>
+          <input type="hidden" name="service" required />
+        </div>
+
+        <div class="mb-3">
+          <label for="food" class="form-label">Food</label>
+          <div id="food" class="star-rating">
+            <i class="fa fa-star" data-value="1"></i>
+            <i class="fa fa-star" data-value="2"></i>
+            <i class="fa fa-star" data-value="3"></i>
+            <i class="fa fa-star" data-value="4"></i>
+            <i class="fa fa-star" data-value="5"></i>
+          </div>
+          <input type="hidden" name="food" required />
+        </div>
+
+        <div class="mb-3">
+          <label for="branch" class="form-label">Branch</label>
+          <div id="branch" class="star-rating">
+            <i class="fa fa-star" data-value="1"></i>
+            <i class="fa fa-star" data-value="2"></i>
+            <i class="fa fa-star" data-value="3"></i>
+            <i class="fa fa-star" data-value="4"></i>
+            <i class="fa fa-star" data-value="5"></i>
+          </div>
+          <input type="hidden" name="branch" required />
+        </div>
+
+        <div class="mb-3">
+          <label for="price" class="form-label">Price</label>
+          <div id="price" class="star-rating">
+            <i class="fa fa-star" data-value="1"></i>
+            <i class="fa fa-star" data-value="2"></i>
+            <i class="fa fa-star" data-value="3"></i>
+            <i class="fa fa-star" data-value="4"></i>
+            <i class="fa fa-star" data-value="5"></i>
+          </div>
+          <input type="hidden" name="price" required />
+        </div>
+
+        <div class="mb-3">
+          <label for="reviewText" class="form-label">Your Review</label>
+          <textarea
+            id="reviewText"
+            class="form-control"
+            rows="3"
+            name="reviewText"
+            placeholder="Write your review here..."
+          ></textarea>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Submit Review</button>
+      </form>
+    {{/if}}
+  {{else}}
+    <div class="lead text-center">This order doesn't exist ;(</div>
+  {{/if}}
+</div>

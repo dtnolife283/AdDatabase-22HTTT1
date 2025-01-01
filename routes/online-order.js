@@ -11,4 +11,8 @@ router.get("/branch/:branchId", onlineOrderController.getBranchPage);
 
 router.post("/place-order", onlineOrderController.postOrder);
 
+router.get("/review/:orderId", onlineOrderController.getReviewPage);
+
+router.post("/review/:orderId", onlineOrderController.postReviewPage);
+
 export default router;

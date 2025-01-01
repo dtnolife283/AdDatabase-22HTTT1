@@ -173,6 +173,31 @@ const onlineOrderController = {
       return res.status(500).json({ message: err.message });
     }
   },
+  getReviewPage: async (req, res, next) => {
+    const orderId = req.params.orderId;
+
+    try {
+      const order = await db("ORDER")
+        .select("ID_Review")
+        .where("ID_Order", orderId)
+        .first();
+
+      res.render("review", {
+        order,
+        pageTitle: "Review",
+        customCSS: ["review.css", "online_user_home.css"],
+        customJS: ["review.js"],
+        cdnJS:
+          '<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>',
+      });
+    } catch (err) {
+      return res.status(500).json({ message: err.message });
+    }
+  },
+  postReviewPage: async (req, res, next) => {
+    const { service, food, branch, price, reviewText } = req.body;
+    console.log(service, food, branch, price, reviewText);
+  },
 };
 
 export default onlineOrderController;
