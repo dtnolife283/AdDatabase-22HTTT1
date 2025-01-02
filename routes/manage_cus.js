@@ -7,6 +7,12 @@ router.get("/", managerCusController.getAllCus);
 
 router.get("/edit/:id", managerCusController.editCus);
 
-router.post("/update", managerCusController.updateCus);
+router.post("/update", managerCusController.confirmUpdate);
+
+router.post("/delete", managerCusController.confirmDeletion);
+
+router.get("/add", managerCusController.addCus);
+
+router.post("/confirm-add", managerCusController.confirmAdd);
 
 export default router;
