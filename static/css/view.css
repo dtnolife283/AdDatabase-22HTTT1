@@ -1,206 +1,207 @@
-@import url('variables.css');
+@import url("variables.css");
 
 /* Filter styling */
 .filter {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    height: fit-content;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: fit-content;
 }
 
 .filter-name {
-    font-size: 25px;
-    font-weight: 700;
-    font-family: 'Poppins', sans-serif;
-    color: #493628;
-    position: relative;
-    line-height: 35px;
+  font-size: 25px;
+  font-weight: 700;
+  font-family: "Poppins", sans-serif;
+  color: #493628;
+  position: relative;
+  line-height: 35px;
 }
 
 .filter-name::before {
-    content: '';
-    position: absolute;
-    bottom: -1px;
-    width: 100%;
-    background: linear-gradient(to right, #AB886D, #493628);
-    padding: 1.5px;
+  content: "";
+  position: absolute;
+  bottom: -1px;
+  width: 100%;
+  background: linear-gradient(to right, #ab886d, #493628);
+  padding: 1.5px;
 }
 
 .filter-button {
-    cursor: pointer;
-    padding: none;
-    border: none;
-    outline: none;
-    border-radius: 5px;
-    background-color: #553f2f;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  cursor: pointer;
+  padding: none;
+  border: none;
+  outline: none;
+  border-radius: 5px;
+  background-color: #553f2f;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .filter-icon {
-    font-size: 2.5em;
-    color: #E4E0E1;
-    height: 100%;
-    display: flex;
-    align-items: center;
-    padding: 2px 0;
+  font-size: 2.5em;
+  color: #e4e0e1;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  padding: 2px 0;
 }
 
 .filter-button:hover {
-    background-color: #493628;
+  background-color: #493628;
 }
 
 .filter-button:active {
-    background-color: #463225;
+  background-color: #463225;
 }
 
 /* Style filter container */
 .filter-content form {
-    display: block;
+  display: block;
 }
 
 .filter-item {
-    display: inline-flex;
-    flex-direction: column;
-    margin-right: 20px;
+  display: inline-flex;
+  flex-direction: column;
+  margin-right: 20px;
 }
 
 .filter-item label {
-    font-size: 20px;
-    font-weight: 700;
-    font-family: 'Poppins', sans-serif;
-    color: #493628;
-    margin-bottom: 10px;
+  font-size: 20px;
+  font-weight: 700;
+  font-family: "Poppins", sans-serif;
+  color: #493628;
+  margin-bottom: 10px;
 }
 
-.filter-item select {
-    font-size: 16px;
-    font-family: 'Poppins', sans-serif;
-    background-color: #E4E0E1;
-    color: #493628;
-    padding: 10px;
-    border: 1px solid #493628;
-    width: 100%;
-    outline: none;
-    box-shadow: 0 0 2px rgba(0, 0, 0, 0.75);
-    width: 180px;
+.filter-item select,
+.filter-item input {
+  font-size: 16px;
+  font-family: "Poppins", sans-serif;
+  background-color: #e4e0e1;
+  color: #493628;
+  padding: 10px;
+  border: 1px solid #493628;
+  width: 100%;
+  outline: none;
+  box-shadow: 0 0 2px rgba(0, 0, 0, 0.75);
+  width: 180px;
 }
 
 .filter-item select:focus {
-    border-color: #AB886D;
+  border-color: #ab886d;
 }
 
 .filter-item #food-item {
-    width: 300px;
+  width: 300px;
 }
 
 .filter-item select option {
-    background-color: #E4E0E1;
-    color: #493628;
-    padding: 10px;
-    border: 1px solid #493628;
-    font-size: 16px;
-    outline: none;
+  background-color: #e4e0e1;
+  color: #493628;
+  padding: 10px;
+  border: 1px solid #493628;
+  font-size: 16px;
+  outline: none;
 }
 
 .filter-actions {
-    float: right;
-    margin-top: 35px;
+  float: right;
+  margin-top: 35px;
 }
 
 .filter-actions button {
-    padding: 10px 20px;
-    border: none;
-    outline: none;
-    border-radius: 5px;
-    background-color: #553f2f;
-    color: #E4E0E1;
-    font-size: 16px;
-    font-family: 'Poppins', sans-serif;
-    cursor: pointer;
+  padding: 10px 20px;
+  border: none;
+  outline: none;
+  border-radius: 5px;
+  background-color: #553f2f;
+  color: #e4e0e1;
+  font-size: 16px;
+  font-family: "Poppins", sans-serif;
+  cursor: pointer;
 }
 
 .filter-actions button:first-child {
-    margin-right: 10px;
+  margin-right: 10px;
 }
 
 .filter-actions button:hover {
-    background-color: #493628;
+  background-color: #493628;
 }
 
 .filter-actions button:active {
-    background-color: #463225;
+  background-color: #463225;
 }
 
 .hide {
-    display: none;
+  display: none;
 }
 
 /* Branch styling */
 .card {
-    background-color: var(--secondary-color-1);
-    border: 1px solid var(--secondary-color-3);
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  background-color: var(--secondary-color-1);
+  border: 1px solid var(--secondary-color-3);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+  transform: translateY(-5px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
 }
 
 .card-title {
-    color: var(--text-color) !important;
-    font-size: 1.5rem;
-    margin-bottom: 1rem;
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
+  color: var(--text-color) !important;
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
 }
 
 .card-text strong {
-    color: var(--text-color);
+  color: var(--text-color);
 }
 
 .card-footer {
-    background-color: var(--background-color);
-    border-top: 1px solid var(--secondary-color-3);
+  background-color: var(--background-color);
+  border-top: 1px solid var(--secondary-color-3);
 }
 
 a.btn {
-    background-color: var(--primary-btn-color);
-    color: var(--text-color);
-    border: 1px solid var(--text-color);
-    padding: 8px 12px;
-    border-radius: 5px;
-    font-size: 0.9rem;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
+  background-color: var(--primary-btn-color);
+  color: var(--text-color);
+  border: 1px solid var(--text-color);
+  padding: 8px 12px;
+  border-radius: 5px;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
 }
 
 a.btn-outline-primary:hover {
-    background-color: var(--primary-btn-hover-color);
-    border: 1px solid var(--text-color);
+  background-color: var(--primary-btn-hover-color);
+  border: 1px solid var(--text-color);
 }
 
 a.btn-outline-primary:active,
 a.btn-outline-primary:focus,
 a.btn-outline-primary:active:focus {
-    background-color: var(--primary-btn-hover-color);
-    border: 1px solid var(--text-color);
+  background-color: var(--primary-btn-hover-color);
+  border: 1px solid var(--text-color);
 }
 
 a.btn-outline-secondary:hover {
-    background-color: var(--secondary-color-3);
-    color: var(--background-color);
-    border: 1px solid var(--text-color);
+  background-color: var(--secondary-color-3);
+  color: var(--background-color);
+  border: 1px solid var(--text-color);
 }
 
 a.btn-outline-secondary:active,
 a.btn-outline-secondary:focus,
 a.btn-outline-secondary:active:focus {
-    background-color: var(--secondary-color-3);
-    color: var(--background-color);
-    border: 1px solid var(--text-color);
+  background-color: var(--secondary-color-3);
+  color: var(--background-color);
+  border: 1px solid var(--text-color);
 }

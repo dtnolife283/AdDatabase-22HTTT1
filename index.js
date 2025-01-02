@@ -39,6 +39,16 @@ app.engine(
         }
         return "";
       },
+      range: (start, end) => {
+        let result = [];
+        for (let i = start; i < end; i++) {
+          result.push(i);
+        }
+        return result;
+      },
+      lt: (a, b) => {
+        return a <= b;
+      },
     },
   })
 );
@@ -122,6 +132,15 @@ app.use("/revenue/search", revenueRoutes);
 
 app.use("/employee/transfer", moveEmployee);
 app.use("/employee/orders", orderRoutes);
+
+app.get("/review/:reviewId", async (req, res) => {
+  const reviewId = req.params.reviewId;
+  const review = await db("REVIEW").where("ID_Review", reviewId).first();
+  res.render("review-detail", {
+    review,
+    customCSS: ["review.css", "online_user_home.css"],
+  });
+});
 
 app.listen(port, () => {
   console.log(`Server is running on http://localhost:${port}`);

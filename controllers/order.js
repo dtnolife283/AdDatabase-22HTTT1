@@ -2,10 +2,17 @@ import { db } from "../utils/db.js";
 
 const orderController = {
   getOrders: async (req, res) => {
-    const { startDate, endDate, sort } = req.query;
+    const { startDate, endDate, sort, customerId } = req.query;
 
     try {
       let query = db("ORDER").select("*");
+      if (customerId) {
+        query = query.where("ID_Customer", customerId);
+      }
+      const customers = await db("CUSTOMER").select(
+        "ID_Customer",
+        "CustomerName"
+      );
 
       if (startDate && endDate) {
         // Both dates are provided
@@ -27,6 +34,8 @@ const orderController = {
         customCSS: ["online_user_home.css", "view.css"],
         customJS: ["orders.js"],
         orders,
+        customers,
+        length: orders.length,
       });
     } catch (err) {
       return res.status(500).json({ message: err.message });

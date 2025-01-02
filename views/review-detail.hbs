@@ -1,0 +1,55 @@
+<div class="container col-lg-8 my-5 bg-light p-4">
+  <h2>Customer review - #{{review.ID_Review}}</h2>
+  {{#if review}}
+    <div class="mb-3">
+      <label for="service" class="form-label">Service</label>
+      <div id="service" class="star-rating">
+      {{#each (range 1 6)}}
+        <i class="fa fa-star {{#if (lt this ../review.ServiceScore)}}active{{/if}}"></i>
+      {{/each}}
+      </div>
+    </div>
+
+    <div class="mb-3">
+      <label for="food" class="form-label">Food</label>
+      <div id="food" class="star-rating">
+      {{#each (range 1 6)}}
+        <i class="fa fa-star {{#if (lt this ../review.FoodScore)}}active{{/if}}"></i>
+      {{/each}}
+      </div>
+    </div>
+
+    <div class="mb-3">
+      <label for="branch" class="form-label">Branch</label>
+      <div id="branch" class="star-rating">
+      {{#each (range 1 6)}}
+        <i class="fa fa-star {{#if (lt this ../review.BranchScore)}}active{{/if}}"></i>
+      {{/each}}
+      </div>
+    </div>
+
+    <div class="mb-3">
+      <label for="price" class="form-label">Price</label>
+      <div id="price" class="star-rating">
+      {{#each (range 1 6)}}
+        <i class="fa fa-star {{#if (lt this ../review.PriceScore)}}active{{/if}}"></i>
+      {{/each}}
+      </div>
+    </div>
+
+    <div class="mb-3">
+      <label for="reviewText" class="form-label">Your Review</label>
+      <textarea
+        id="reviewText"
+        class="form-control"
+        rows="3"
+        name="reviewText"
+        placeholder="Write your review here..."
+        style="resize: none;"
+        disabled
+      >{{#if review.Comment}}{{review.Comment}}{{else}}No comment{{/if}}</textarea>
+    </div>
+  {{else}}
+    <div class="lead text-center">This review doesn't exist ;(</div>
+  {{/if}}
+</div>

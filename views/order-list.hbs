@@ -1,6 +1,6 @@
 <div class="container mt-4">
   <div class="filter ms-3 me-3">
-    <span class="filter-name">Orders</span>
+    <span class="filter-name">Orders ({{length}})</span>
     <button class="filter-button">
       <span class="filter-icon">
         <ion-icon name="filter-circle-outline"></ion-icon>
@@ -25,10 +25,19 @@
         <input type="date" name="endDate" id="end-date" class="form-control" />
       </div>
       <div class="filter-item">
-        <label for="sort">Sort by ID</label>
+        <label for="sort">Sort by Order ID</label>
         <select name="sort" id="sort">
           <option value="asc" selected>Ascending</option>
           <option value="desc">Descending</option>
+        </select>
+      </div>
+      <div class="filter-item">
+        <label for="customer">Per Customer</label>
+        <select name="customerId" id="customer">
+          <option value="" selected>All</option>
+          {{#each customers}}
+            <option value="{{ID_Customer}}">{{CustomerName}}</option>
+          {{/each}}
         </select>
       </div>
       <div class="filter-actions mt-3">
@@ -71,6 +80,15 @@
                 <i class="bi bi-clock me-2"></i>
                 <strong>Actual Price:</strong>
                 {{formatCurrency ActualPrice}}
+              </p>
+              <p class="card-text">
+                <i class="bi bi-clock me-2"></i>
+                <strong>Review:</strong>
+                {{#if ID_Review}}
+                  <a href="/review/{{ID_Review}}">View</a>
+                {{else}}
+                  <span class="text-danger">No review</span>
+                {{/if}}
               </p>
             </div>
           </div>
