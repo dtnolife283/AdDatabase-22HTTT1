@@ -114,7 +114,7 @@ app.use("/online/online-order", onlineOrderRoutes);
 app.use("/employee/view-employee", viewEmployeeRoutes);
 app.use("/in-restaurant", inRestaurantRoutes);
 
-app.use("/employee", moveEmployee);
+app.use("/employee/transfer", moveEmployee);
 
 app.listen(port, () => {
   console.log(`Server is running on http://localhost:${port}`);

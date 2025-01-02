@@ -3,8 +3,8 @@ import moveEmployee from '../controllers/employee.js';
 
 const router = express.Router();
 
-router.get('/transfer', moveEmployee.renderTransferPage);
+router.get('/', moveEmployee.renderTransferPage);
 
-router.post('/transfer', moveEmployee.moveEmployee);
+router.post('/', moveEmployee.moveEmployee);
 
 export default router;

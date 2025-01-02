@@ -40,7 +40,7 @@ const moveEmployee = {
             .first();
 
             if (existingRecord) {
-                return res.redirect("/online/transfer?success=false&message=already-in-branch");
+                return res.redirect("/employee/transfer?success=false&message=already-in-branch");
             }
         
             // update the EndDate
@@ -56,11 +56,11 @@ const moveEmployee = {
                 StartDate: currentDate,
                 EndDate: null});
 
-            return res.redirect("/online/transfer?success=true");
+            return res.redirect("/employee/transfer?success=true");
 
         } catch(err) {
             console.log(err);
-            return res.redirect("/online/transfer?success=false&message=server-error");
+            return res.redirect("/employee/transfer?success=false&message=server-error");
         }
     }
 }
