@@ -11,6 +11,7 @@ import viewEmployeeRoutes from "./routes/view-employee.js";
 import Handlebars from "handlebars";
 import moveEmployee from "./routes/employee.js";
 import { db } from "./utils/db.js";
+import orderRoutes from "./routes/order.js";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -30,6 +31,12 @@ app.engine(
           return value.toLocaleString("en-US");
         }
         return "0";
+      },
+      formatDate: (date) => {
+        if (date) {
+          return new Date(date).toLocaleDateString("en-US");
+        }
+        return "";
       },
     },
   })
@@ -76,15 +83,13 @@ app.get("/online", async (req, res) => {
 
 app.get("/online/booking", async (req, res) => {
   try {
-    const topBranches = await db("BRANCH")
-      .select("BranchName", "ID_Branch");
+    const topBranches = await db("BRANCH").select("BranchName", "ID_Branch");
     return res.render("booking", {
       customCSS: ["online_booking.css", "online_user_home.css"],
       topBranches: topBranches,
     });
-  } 
-  catch (error) {
-    console.log(error)
+  } catch (error) {
+    console.log(error);
   }
 });
 
@@ -105,16 +110,15 @@ app.get("/online/booking", async (req, res) => {
 //   }
 // });
 
-
-
 app.use("/employee/manage_cus", manageCusRoutes);
 app.use("/online/view", viewRoutes);
-app.use("/online/menu", menuRoutes); 
+app.use("/online/menu", menuRoutes);
 app.use("/online/online-order", onlineOrderRoutes);
 app.use("/employee/view-employee", viewEmployeeRoutes);
 app.use("/in-restaurant", inRestaurantRoutes);
 
 app.use("/employee/transfer", moveEmployee);
+app.use("/employee/orders", orderRoutes);
 
 app.listen(port, () => {
   console.log(`Server is running on http://localhost:${port}`);
