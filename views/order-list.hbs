@@ -63,26 +63,26 @@
                 #{{ID_Order}}
               </h5>
               <p class="card-text d-flex align-items-center">
-                <i class="bi bi-geo me-2"></i>
+                <i class="bi bi-tag me-2"></i>
                 <span><strong>Order Type:</strong> {{type}}</span>
               </p>
               <p class="card-text d-flex align-items-center">
-                <i class="bi bi-telephone me-2"></i>
+                <i class="bi bi-calendar-check me-2"></i>
                 <span><strong>Order Date:</strong>
                   {{formatDate OrderDate}}</span>
               </p>
               <p class="card-text">
-                <i class="bi bi-clock me-2"></i>
+                <i class="bi bi-cash-stack me-2"></i>
                 <strong>Total Price:</strong>
                 {{formatCurrency TotalPrice}}
               </p>
               <p class="card-text">
-                <i class="bi bi-clock me-2"></i>
+                <i class="bi bi-cash-coin me-2"></i>
                 <strong>Actual Price:</strong>
                 {{formatCurrency ActualPrice}}
               </p>
               <p class="card-text">
-                <i class="bi bi-clock me-2"></i>
+                <i class="bi bi-card-checklist me-2"></i>
                 <strong>Review:</strong>
                 {{#if ID_Review}}
                   <a href="/review/{{ID_Review}}">View</a>
