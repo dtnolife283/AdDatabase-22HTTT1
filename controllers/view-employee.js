@@ -63,6 +63,44 @@ const viewEmployeeController = {
         const employee = req.body;
         await postData.postAddEmployee(employee);
         res.redirect('/employee/view-employee');
+    },
+
+    getEmployeeDetailPage: async (req, res) => {
+        const id = req.params.id;
+        const employee = await getData.getEmployeeById(id);
+        let employeeBranchHistory = await getData.getEmployeeBranchHistory(id);
+        const dob = new Date(employee.DoB);
+        employee.DoB = `${dob.getDate().toString().padStart(2, '0')}/${
+            (dob.getMonth() + 1).toString().padStart(2, '0')
+        }/${dob.getFullYear()}`;
+        employee.Salary = employee.Salary.toLocaleString('vi-VN', {style: 'currency', currency: 'VND'});
+        employeeBranchHistory = employeeBranchHistory.map(history => {
+            const startDate = new Date(history.StartDate);
+            history.StartDate = `${startDate.getDate().toString().padStart(2, '0')}/${
+                (startDate.getMonth() + 1).toString().padStart(2, '0')
+            }/${startDate.getFullYear()}`;
+            if (history.EndDate) {
+                const endDate = new Date(history.EndDate);
+                history.EndDate = `${endDate.getDate().toString().padStart(2, '0')}/${
+                    (endDate.getMonth() + 1).toString().padStart(2, '0')
+                }/${endDate.getFullYear()}`;
+            }
+            return history;
+        });
+        let dailyAverageServiceScores = await getData.getDailyServiceScoreByEmployee(id);
+        let monthlyAverageServiceScores = await getData.getMonthlyServiceScoreByEmployee(id);
+        let quarterlyAverageServiceScores = await getData.getQuarterlyServiceScoreByEmployee(id);
+        let yearlyAverageServiceScores = await getData.getYearlyServiceScoreByEmployee(id);
+        res.render('viewEmployeeDetail', {
+            layout: 'employee',
+            customCSS: ['online_user_home.css', 'view.css', 'viewEmployee.css'],
+            employee: employee,
+            branchHistory: employeeBranchHistory,
+            quarterlyAverageServiceScores: quarterlyAverageServiceScores,
+            dailyAverageServiceScores: dailyAverageServiceScores,
+            monthlyAverageServiceScores: monthlyAverageServiceScores,
+            yearlyAverageServiceScores: yearlyAverageServiceScores
+        });
     }
 };
 

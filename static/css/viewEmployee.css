@@ -101,3 +101,10 @@ button.btn-outline-secondary:active:focus {
 .modal-body {
     padding: 20px;
 }
+
+/* style color table-responsive */
+.table-responsive {
+    background-color: var(--background-color);
+    color: var(--text-color);
+    border-radius: 8px;
+}
