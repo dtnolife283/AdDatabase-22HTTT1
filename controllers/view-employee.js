@@ -1,5 +1,6 @@
 import { get } from "http";
 import getData from "../utils/getData.js";
+import postData from "../utils/postData.js";
 
 const viewEmployeeController = {
     getViewEmployeePage: async (req, res) => {
@@ -29,6 +30,7 @@ const viewEmployeeController = {
 
     getEditEmployeeInfoPage: async (req, res) => {
         const id = req.params.id;
+        const departments = await getData.getDepartments();
         let employee = await getData.getEmployeeById(id);
         const dob = new Date(employee.DoB);
         employee.DoB = `${dob.getFullYear()}-${(dob.getMonth() + 1).toString().padStart(2, '0')}-${dob.getDate().toString().padStart(2, '0')}`;
@@ -37,7 +39,16 @@ const viewEmployeeController = {
             customCSS: ['online_user_home.css'],
             customJS: ['editEmployeeInfo.js'],
             employee: employee,
+            departments: departments
         });
+    },
+
+    postEditEmployeeInfo: async (req, res) => {
+        const id = req.params.id;
+        const employee = req.body;
+        await postData.postEditEmployeeInfo(employee, id);
+        await postData.postEditEmployeeLeaveBalance(employee, id);
+        res.redirect('/employee/view-employee');
     }
 };
 

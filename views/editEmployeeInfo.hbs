@@ -5,13 +5,13 @@
                 <div class="col-md-6">
                     <div class="form-group">
                         <label for="employee-name">Employee Name</label>
-                        <input type="text" class="form-control" id="employee-name" name="employee-name" value="{{employee.EmployeeName}}" required>
+                        <input type="text" class="form-control" id="employee-name" name="employeeName" value="{{employee.EmployeeName}}" required>
                     </div>
                 </div>
                 <div class="col-md-6">
                     <div class="form-group">
                         <label for="employee-phone">Phone Number</label>
-                        <input type="text" class="form-control" id="employee-phone" name="employee-phone" value="{{employee.PhoneNumber}}" required>
+                        <input type="text" class="form-control" id="employee-phone" name="employeePhone" value="{{employee.PhoneNumber}}" required>
                     </div>
                 </div>
             </div>
@@ -20,15 +20,15 @@
                 <div class="col-md-6">
                     <div class="form-group">
                         <label for="employee-dob">Date of Birth</label>
-                        <input type="date" class="form-control" id="employee-dob" name="employee-dob" value="{{employee.DoB}}" required>
+                        <input type="date" class="form-control" id="employee-dob" name="employeeDoB" value="{{employee.DoB}}" required>
                     </div>
                 </div>
                 <div class="col-md-6">
                     <div class="form-group">
                         <label for="employee-gender">Gender</label>
-                        <select class="form-control" id="employee-gender" name="employee-gender" required>
-                            <option value="Male" {{#if (eq employee.Gender 'Male')}}selected{{/if}}>Male</option>
-                            <option value="Female" {{#if (eq employee.Gender 'Female')}}selected{{/if}}>Female</option>
+                        <select class="form-control" id="employee-gender" name="employeeGender" required>
+                            <option value="M" {{#if (eq employee.Gender 'M')}}selected{{/if}}>Male</option>
+                            <option value="F" {{#if (eq employee.Gender 'F')}}selected{{/if}}>Female</option>
                         </select>
                     </div>
                 </div>
@@ -38,29 +38,23 @@
                 <div class="col-md-6">
                     <div class="form-group">
                         <label for="employee-totalDaysOff">Total Days Off</label>
-                        <input type="number" class="form-control" id="employee-totalDaysOff" name="employee-totalDaysOff" value="{{employee.TotalDaysOff}}" min="0" required>
+                        <input type="number" class="form-control" id="employee-totalDaysOff" name="employeeTotalDaysOff" value="{{employee.TotalDaysOff}}" min="0" required>
                     </div>
                 </div>
                 <div class="col-md-6">
                     <div class="form-group">
                         <label for="employee-remainingDaysOff">Remaining Days Off</label>
-                        <input type="number" class="form-control" id="employee-remainingDaysOff" name="employee-remainingDaysOff" value="{{employee.RemainingDaysOff}}" min="0" required>
+                        <input type="number" class="form-control" id="employee-remainingDaysOff" name="employeeRemainingDaysOff" value="{{employee.RemainingDaysOff}}" min="0" required>
                     </div>
                 </div>
             </div>
-            <div class="row mb-4">
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <label for="employee-department">Department Name</label>
-                        <input type="text" class="form-control" id="employee-department" name="employee-department" value="{{employee.DepartmentName}}" disabled>
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <label for="employee-salary">Salary</label>
-                        <input type="number" class="form-control" id="employee-salary" name="employee-salary" value="{{employee.Salary}}" min="0" required>
-                    </div>
-                </div>
+            <div class="form-group">
+                <label for="employee-department">Department Name</label>
+                <select class="form-control" id="employee-department" name="employeeDepartment" required>
+                    {{#each departments}}
+                    <option value="{{this.ID_Department}}" {{#if (eq this.ID_Department ../employee.ID_Department)}}selected{{/if}}>{{this.DepartmentName}}</option>
+                    {{/each}}
+                </select>
             </div>
             <div class="form-group text-end mt-3">
                 <button type="submit" class="btn btn-primary">Save Changes</button>
