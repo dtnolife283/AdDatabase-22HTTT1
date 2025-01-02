@@ -49,3 +49,7 @@ button.btn-outline-danger:active:focus {
     color: var(--text-color);
     box-shadow: 0 0 0 2px var(--secondary-color-4);
 }
+
+select {
+    width: 200px !important;
+}
