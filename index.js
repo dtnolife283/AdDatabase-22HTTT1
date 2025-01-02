@@ -105,15 +105,21 @@ app.get("/online/booking", async (req, res) => {
 });
 
 app.post("/booking", async (req, res) => {
-  const {date, time, details, numberpeople } = req.body;
+  const { date, time, details, numberpeople } = req.body;
 
   try {
     // Get the current max ID_Order
     const maxIdOrder = await db("ORDER").max("ID_Order as maxId");
     const nextIdOrder = maxIdOrder[0].maxId ? maxIdOrder[0].maxId + 1 : 1;
     // Save the booking to the database
-    await db("ORDER").insert({ID_Order: nextIdOrder, OrderDate: date});
-    await db("RESERVATION_ORDER").insert({ID_Reservation: nextIdOrder, ID_Table: null, ArrivalTime: time, NumberOfPeople: numberpeople, Notes: details})
+    await db("ORDER").insert({ ID_Order: nextIdOrder, OrderDate: date });
+    await db("RESERVATION_ORDER").insert({
+      ID_Reservation: nextIdOrder,
+      ID_Table: null,
+      ArrivalTime: time,
+      NumberOfPeople: numberpeople,
+      Notes: details,
+    });
     res.send("Booking successful!");
   } catch (error) {
     console.error("Error saving booking:", error);
@@ -137,6 +143,7 @@ app.get("/review/:reviewId", async (req, res) => {
   const reviewId = req.params.reviewId;
   const review = await db("REVIEW").where("ID_Review", reviewId).first();
   res.render("review-detail", {
+    layout: "employee",
     review,
     customCSS: ["review.css", "online_user_home.css"],
   });

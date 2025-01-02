@@ -18,6 +18,7 @@ const inRestaurantController = {
         cdnJS:
           '<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>',
         customCSS: ["online_user_home.css"],
+        layout: "employee",
         customJS: ["in-restaurant.js", "priceFormat.js", "close-bill.js"],
         branchId,
         areaId: branch.ID_Area,

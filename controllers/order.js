@@ -33,6 +33,7 @@ const orderController = {
       res.status(200).render("order-list", {
         customCSS: ["online_user_home.css", "view.css"],
         customJS: ["orders.js"],
+        layout: "employee",
         orders,
         customers,
         length: orders.length,
@@ -51,6 +52,7 @@ const orderController = {
 
       res.render("update-order", {
         customCSS: ["online_user_home.css", "view.css"],
+        layout: "employee",
         cdnCSS:
           '<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>',
         order,

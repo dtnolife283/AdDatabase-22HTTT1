@@ -13,6 +13,7 @@ const onlineOrderController = {
 
       res.render("online-order/select-area", {
         customCSS: ["online_user_home.css", "view.css"],
+        layout: redirectUrl === "/in-restaurant" ? "employee" : "main",
         allAreas,
         redirectUrl,
         backUrl: firstPart,
@@ -25,6 +26,7 @@ const onlineOrderController = {
   getAreaPage: async (req, res, next) => {
     const areaId = req.params.areaId;
     try {
+      const redirectUrl = req.baseUrl;
       const allBranches = await db("BRANCH")
         .select("*")
         .where("ID_Area", areaId);
@@ -36,8 +38,9 @@ const onlineOrderController = {
 
       res.render("online-order/select-branch", {
         customCSS: ["online_user_home.css", "view.css"],
+        layout: redirectUrl === "/in-restaurant" ? "employee" : "main",
         allBranches,
-        redirectUrl: req.baseUrl,
+        redirectUrl: redirectUrl,
       });
     } catch (err) {
       console.log(err);
@@ -46,6 +49,8 @@ const onlineOrderController = {
   getBranchPage: async (req, res, next) => {
     const branchId = req.params.branchId;
     try {
+      const redirectUrl = req.baseUrl;
+
       const branch = await db("BRANCH")
         .select("ID_Area")
         .where("ID_Branch", branchId)
@@ -64,7 +69,7 @@ const onlineOrderController = {
         customJS: ["online-order.js", "priceFormat.js", "close-bill.js"],
         branchId,
         areaId: branch.ID_Area,
-        redirectUrl: req.baseUrl,
+        redirectUrl: redirectUrl,
         allFoods,
       });
     } catch (err) {
@@ -194,6 +199,8 @@ const onlineOrderController = {
   getReviewPage: async (req, res, next) => {
     const orderId = req.params.orderId;
 
+    const redirectUrl = req.baseUrl;
+
     try {
       const order = await db("ORDER")
         .select("ID_Review")
@@ -203,8 +210,10 @@ const onlineOrderController = {
       res.render("review", {
         order,
         pageTitle: "Review",
+        layout: "employee",
         customCSS: ["review.css", "online_user_home.css"],
         customJS: ["review.js"], //css and js
+        layout: redirectUrl === "/in-restaurant" ? "employee" : "main",
         cdnJS:
           '<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>',
       });
