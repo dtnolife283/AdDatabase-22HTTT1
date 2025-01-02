@@ -119,9 +119,132 @@ class GetData {
             .first();
     }
 
+    async getEmployeeBranchHistory(id) { 
+        return db("EMP_BRANCH_HISTORY as ebh")
+            .join("BRANCH as b", "ebh.ID_Branch", "b.ID_Branch")
+            .join("AREA as a", "b.ID_Area", "a.ID_Area")
+            .where("ebh.ID_Employee", id)
+            .select(
+                "ebh.*",
+                "b.BranchName",
+                "a.AreaName"
+            );
+    }
+
     async getDepartments() {
         return db("DEPARTMENT").select("*");
     }
-}
+    
+    async getQuarterlyServiceScoreByEmployee(id) {
+        try {
+            const query = `
+                SELECT 
+                    e.ID_Employee AS employee_id, 
+                    e.EmployeeName AS employee_name, 
+                    AVG(r.ServiceScore) AS avg_service_score, 
+                    CONCAT(YEAR(o.OrderDate), '-Q', DATEPART(QUARTER, o.OrderDate)) AS period
+                FROM EMPLOYEE e
+                JOIN [ORDER] o ON e.ID_Employee = o.ID_Employee
+                JOIN REVIEW r ON o.ID_Review = r.ID_Review
+                WHERE e.ID_Employee = ?
+                GROUP BY 
+                    YEAR(o.OrderDate), 
+                    DATEPART(QUARTER, o.OrderDate), 
+                    e.ID_Employee, 
+                    e.EmployeeName
+                ORDER BY e.ID_Employee
+            `;
+    
+            const results = await db.raw(query, [id]);
+            return results;
+        } catch (error) {
+            console.error("Error fetching quarterly service scores:", error);
+            throw new Error("Could not fetch service scores.");
+        }
+    }
+
+    async getDailyServiceScoreByEmployee(id) {
+        try {
+            const query = `
+                SELECT 
+                    e.ID_Employee AS employee_id, 
+                    e.EmployeeName AS employee_name, 
+                    AVG(r.ServiceScore) AS avg_service_score, 
+                    CONVERT(VARCHAR(10), o.OrderDate, 120) AS period -- Format as YYYY-MM-DD
+                FROM EMPLOYEE e
+                JOIN [ORDER] o ON e.ID_Employee = o.ID_Employee
+                JOIN REVIEW r ON o.ID_Review = r.ID_Review
+                WHERE e.ID_Employee = ?
+                GROUP BY 
+                    CONVERT(VARCHAR(10), o.OrderDate, 120), -- Group by day
+                    e.ID_Employee, 
+                    e.EmployeeName
+                ORDER BY period
+            `;
+    
+            const results = await db.raw(query, [id]);
+            return results;
+        } catch (error) {
+            console.error("Error fetching daily service scores:", error);
+            throw new Error("Could not fetch service scores.");
+        }
+    }
+    
+    async getMonthlyServiceScoreByEmployee(id) {
+        try {
+            const query = `
+                SELECT 
+                    e.ID_Employee AS employee_id, 
+                    e.EmployeeName AS employee_name, 
+                    AVG(r.ServiceScore) AS avg_service_score, 
+                    CONVERT(VARCHAR(7), o.OrderDate, 120) AS period -- Format as YYYY-MM
+                FROM EMPLOYEE e
+                JOIN [ORDER] o ON e.ID_Employee = o.ID_Employee
+                JOIN REVIEW r ON o.ID_Review = r.ID_Review
+                WHERE e.ID_Employee = ?
+                GROUP BY 
+                    CONVERT(VARCHAR(7), o.OrderDate, 120), -- Group by month
+                    e.ID_Employee, 
+                    e.EmployeeName
+                ORDER BY period
+            `;
+    
+            const results = await db.raw(query, [id]);
+            return results;
+        } catch (error) {
+            console.error("Error fetching monthly service scores:", error);
+            throw new Error("Could not fetch service scores.");
+        }
+    }
+    
+    async getYearlyServiceScoreByEmployee(id) {
+        try {
+            const query = `
+                SELECT 
+                    e.ID_Employee AS employee_id, 
+                    e.EmployeeName AS employee_name, 
+                    AVG(r.ServiceScore) AS avg_service_score, 
+                    YEAR(o.OrderDate) AS period -- Year as the period
+                FROM EMPLOYEE e
+                JOIN [ORDER] o ON e.ID_Employee = o.ID_Employee
+                JOIN REVIEW r ON o.ID_Review = r.ID_Review
+                WHERE e.ID_Employee = ?
+                GROUP BY 
+                    YEAR(o.OrderDate), -- Group by year
+                    e.ID_Employee, 
+                    e.EmployeeName
+                ORDER BY period
+            `;
+    
+            const results = await db.raw(query, [id]);
+            return results;
+        } catch (error) {
+            console.error("Error fetching yearly service scores:", error);
+            throw new Error("Could not fetch service scores.");
+        }
+    }
+    
+    
+}    
 
 export default new GetData();
