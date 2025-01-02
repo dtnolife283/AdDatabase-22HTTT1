@@ -1,0 +1,29 @@
+button.btn {
+    background-color: var(--primary-btn-color);
+    color: var(--text-color);
+    border: 1px solid var(--text-color);
+    padding: 8px 12px;
+    border-radius: 5px;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+a.btn-outline-primary:hover {
+    background-color: var(--primary-btn-hover-color);
+    border: 1px solid var(--text-color);
+}
+
+button.btn-outline-danger:hover {
+    background-color: var(--secondary-color-3);
+    color: var(--background-color);
+    border: 1px solid var(--text-color);
+}
+
+button.btn-outline-danger:active,
+button.btn-outline-danger:focus,
+button.btn-outline-danger:active:focus {
+    background-color: var(--secondary-color-3);
+    color: var(--background-color);
+    border: 1px solid var(--text-color);
+}

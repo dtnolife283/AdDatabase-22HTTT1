@@ -25,6 +25,12 @@ class PostData {
                 }
             );
     }
+
+    async postDeleteEmployee(id) {
+        return db("EMPLOYEE")
+            .where("ID_Employee", id)
+            .del();
+    }
 }
 
 export default new PostData();

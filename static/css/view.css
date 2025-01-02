@@ -186,7 +186,22 @@ a.btn-outline-primary:hover {
     border: 1px solid var(--text-color);
 }
 
+a.btn-outline-primary:active,
+a.btn-outline-primary:focus,
+a.btn-outline-primary:active:focus {
+    background-color: var(--primary-btn-hover-color);
+    border: 1px solid var(--text-color);
+}
+
 a.btn-outline-secondary:hover {
+    background-color: var(--secondary-color-3);
+    color: var(--background-color);
+    border: 1px solid var(--text-color);
+}
+
+a.btn-outline-secondary:active,
+a.btn-outline-secondary:focus,
+a.btn-outline-secondary:active:focus {
     background-color: var(--secondary-color-3);
     color: var(--background-color);
     border: 1px solid var(--text-color);

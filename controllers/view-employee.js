@@ -19,7 +19,7 @@ const viewEmployeeController = {
         let selectedBranch = branch;
         res.render('viewEmployee', {
             layout: 'employee',
-            customCSS: ['online_user_home.css', 'view.css'],
+            customCSS: ['online_user_home.css', 'view.css', 'viewEmployee.css'],
             customJS: ['view.js'],
             branches: branches,
             employees: employees,
@@ -48,6 +48,12 @@ const viewEmployeeController = {
         const employee = req.body;
         await postData.postEditEmployeeInfo(employee, id);
         await postData.postEditEmployeeLeaveBalance(employee, id);
+        res.redirect('/employee/view-employee');
+    },
+
+    postDeleteEmployee: async (req, res) => {
+        const id = req.params.id;
+        await postData.postDeleteEmployee(id);
         res.redirect('/employee/view-employee');
     }
 };
