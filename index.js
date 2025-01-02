@@ -7,6 +7,7 @@ import inRestaurantRoutes from "./routes/in-restaurant.js";
 import viewRoutes from "./routes/view.js";
 import menuRoutes from "./routes/menu.js";
 import manageCusRoutes from "./routes/manage_cus.js";
+import viewEmployeeRoutes from "./routes/view-employee.js";
 import Handlebars from "handlebars";
 import { db } from "./utils/db.js";
 
