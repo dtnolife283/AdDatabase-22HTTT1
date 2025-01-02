@@ -5,6 +5,7 @@ import { fileURLToPath } from "url";
 import onlineOrderRoutes from "./routes/online-order.js";
 import viewRoutes from "./routes/view.js";
 import menuRoutes from "./routes/menu.js";
+import manageCusRoutes from "./routes/manage_cus.js";
 import Handlebars from "handlebars";
 
 const __filename = fileURLToPath(import.meta.url);
@@ -64,7 +65,7 @@ app.get('/employee', (req, res) => {
 });
 
 app.get("/online", async (req, res) => {
-  res.render("home", {
+  res.render("customer_home", {
     customCSS: ["online_user_home.css"],
   });
 });
@@ -88,6 +89,7 @@ app.post("/booking", async (req, res) => {
   }
 });
 
+app.use("/employee/manage_cus", manageCusRoutes);
 app.use("/online/view", viewRoutes);
 app.use("/online/menu", menuRoutes);
 app.use("/online/online-order", onlineOrderRoutes);
