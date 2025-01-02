@@ -9,6 +9,7 @@ import menuRoutes from "./routes/menu.js";
 import manageCusRoutes from "./routes/manage_cus.js";
 import viewEmployeeRoutes from "./routes/view-employee.js";
 import Handlebars from "handlebars";
+import moveEmployee from "./routes/employee.js";
 import { db } from "./utils/db.js";
 
 const __filename = fileURLToPath(import.meta.url);
@@ -112,6 +113,8 @@ app.use("/online/menu", menuRoutes);
 app.use("/online/online-order", onlineOrderRoutes);
 app.use("/employee/view-employee", viewEmployeeRoutes);
 app.use("/in-restaurant", inRestaurantRoutes);
+
+app.use("/employee/transfer", moveEmployee);
 
 app.listen(port, () => {
   console.log(`Server is running on http://localhost:${port}`);
