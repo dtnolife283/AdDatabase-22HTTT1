@@ -5,7 +5,7 @@ const managerCusController = {
         try{
             const allCus = await db("CUSTOMER").select("*");
             res.render("manage_cus", {
-                customCSS: ['online_user_home.css'],
+                customCSS: ['online_user_home.css', 'viewEmployee.css'],
                 customJS: ["manage_cus.js"],
                 layout: "employee",
                 allCus: allCus,
@@ -22,7 +22,7 @@ const managerCusController = {
             const customer = await db("CUSTOMER").where("ID_CUSTOMER", customerId).first();
 
             res.render("manage_cus/edit_cus", {
-                customCSS: ['online_user_home.css', 'view.css'],
+                customCSS: ['online_user_home.css', 'view.css', 'viewEmployee.css'],
                 customJS: ["manage_cus.js"],
                 layout: "employee",
                 customer: customer,
@@ -82,7 +82,6 @@ const managerCusController = {
     confirmAdd: async (req, res) => {
         try {
             const { id, name, email, phone, ssid, gender } = req.body;
-            console.log(req.body);
             await db("CUSTOMER").insert({
                 ID_CUSTOMER: id,
                 CustomerName: name,
@@ -91,6 +90,7 @@ const managerCusController = {
                 SSID: ssid, 
                 Gender: gender,
             });
+            res.redirect("/employee/manage_cus");
         } catch (err) {
             console.error(err);
             res.status(500).send("Server Error");
