@@ -4,6 +4,11 @@ const totalItemsLabel = document.getElementById("total-items-label");
 
 const placeOrder = document.getElementById("place-order");
 
+const formatter = new Intl.NumberFormat("en-US", {
+  style: "decimal", // Change from "currency" to "decimal"
+  maximumFractionDigits: 2,
+});
+
 placeOrder.addEventListener("click", async function () {
   const result = await Swal.fire({
     title: "Are you sure?",
@@ -30,7 +35,7 @@ placeOrder.addEventListener("click", async function () {
   });
   const data = await response.json();
   if (response.ok) {
-    const bill = JSON.parse(data.bill);
+    const bill = data.bill;
     const orderId = data.orderId;
     populateBillModal(bill, orderId);
     const billModal = new bootstrap.Modal(document.getElementById("billModal"));
@@ -58,7 +63,7 @@ function populateBillModal(bill, orderId) {
     const row = `
       <tr>
         <td>${orderFood.foodName}</td>
-        <td>${orderFood.price}</td>
+        <td>${formatter.format(orderFood.price)}</td>
         <td>${orderFood.quantity}</td>
         <td>${orderFood.amountPrice.toLocaleString()}</td>
       </tr>`;
@@ -95,7 +100,6 @@ document.querySelector(".row").addEventListener("click", function (e) {
   } else {
     delete cart[id];
   }
-  console.log(cart);
   updateTotalItems();
 });
 

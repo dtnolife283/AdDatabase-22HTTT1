@@ -4,9 +4,11 @@
       <h1 class="jumbotron-heading mt-3">Choose your area</h1>
       <p class="lead text-muted">Select an area near you and discover your next
         favourite spot!</p>
+      {{#if hasBackButton}}
       <p>
-        <a href="/online" class="btn btn-primary my-2">Go back</a>
+        <a href="{{backUrl}}" class="btn btn-primary my-2">Go back</a>
       </p>
+      {{/if}}
     </div>
   </section>
   <div class="container mt-4">
@@ -19,7 +21,7 @@
                 <h5 class="card-title text-primary">
                   <ion-icon name="storefront-outline"></ion-icon>
                   <a
-                    href="/online/online-order/area/{{ID_Area}}"
+                    href="{{../redirectUrl}}/area/{{ID_Area}}"
                     style="text-decoration: none; color: black"
                   >{{AreaName}}</a>
                 </h5>
@@ -30,7 +32,7 @@
               </div>
               <div class="card-footer text-end">
                 <a
-                  href="/online/online-order/area/{{ID_Area}}"
+                  href="{{../redirectUrl}}/area/{{ID_Area}}"
                   class="btn btn-sm btn-outline-primary"
                 >
                   <i class="bi bi-clipboard me-1"></i>

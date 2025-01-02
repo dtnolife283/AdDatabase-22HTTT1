@@ -3,6 +3,7 @@ import { engine } from "express-handlebars";
 import path from "path";
 import { fileURLToPath } from "url";
 import onlineOrderRoutes from "./routes/online-order.js";
+import inRestaurantRoutes from "./routes/in-restaurant.js";
 import viewRoutes from "./routes/view.js";
 import menuRoutes from "./routes/menu.js";
 import viewEmployeeRoutes from "./routes/view-employee.js";
@@ -57,9 +58,9 @@ app.get("/select-user", (req, res) => {
   });
 });
 
-app.get('/employee', (req, res) => {
-  res.render('employeeFeatures', {
-    layout: 'employee',
+app.get("/employee", (req, res) => {
+  res.render("employeeFeatures", {
+    layout: "employee",
     customCSS: ["online_user_home.css", "employeeFeatures.css"],
   });
 });
@@ -92,7 +93,8 @@ app.post("/booking", async (req, res) => {
 app.use("/online/view", viewRoutes);
 app.use("/online/menu", menuRoutes);
 app.use("/online/online-order", onlineOrderRoutes);
-app.use('/employee/view-employee', viewEmployeeRoutes);
+app.use("/employee/view-employee", viewEmployeeRoutes);
+app.use("/in-restaurant", inRestaurantRoutes);
 
 app.listen(port, () => {
   console.log(`Server is running on http://localhost:${port}`);
