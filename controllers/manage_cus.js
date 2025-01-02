@@ -33,7 +33,7 @@ const managerCusController = {
         }
     },
     
-    updateCus: async (req, res) => {
+    confirmUpdate: async (req, res) => {
         try {
             const { id, name, email, phone, ssid, gender } = req.body;
             await db("CUSTOMER").where("ID_CUSTOMER", id).update({
@@ -41,13 +41,45 @@ const managerCusController = {
                 Email: email,
                 PhoneNumber: phone,
                 SSID: ssid,
-            })
+                gender: gender,
+            });
+            res.redirect("/employee/manage_cus");
         } catch (err) {
             console.error(err);
             res.status(500).send("Server Error");
         }
     },
 
+    confirmDeletion: async (req, res) => {
+        try {
+            const { id } = req.body;
+            console.log(id);
+            await db("CUSTOMER").where("ID_CUSTOMER", id).del();
+            res.redirect("/employee/manage_cus");
+        } catch (err) {
+            console.error(err);
+            res.status(500).send("Server Error");
+        }
+    },
+
+    addCus: async (req, res) => {
+        try {
+            let id = await db("CUSTOMER").max("ID_CUSTOMER as maxID").first();
+            id = (id.maxID || 0) + 1; 
+            
+            res.render("manage_cus/add_cus", {
+                customCSS: ['online_user_home.css', 'view.css'],
+                customJS: ["manage_cus.js"],
+                layout: "employee",
+                id: id,
+            });
+        } catch (err) {
+            console.error(err);
+            res.status(500).send("Server Error");
+        }
+    },
 };
+
+
 
 export default managerCusController;

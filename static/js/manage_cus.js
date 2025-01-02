@@ -47,8 +47,31 @@ async function updateCustomer() {
 
     if (response.ok) {
         alert("Update customer successfully");
+        window.location.href = "http://localhost:3000/employee/manage_cus";
     } else {
         alert("Update customer failed");
     }
+}
+
+async function confirmDeletion(id){
+    event.preventDefault();
+    const isConfirmed = confirm("Do you want to delete this customer?");
+    if (isConfirmed) {
+        const response = await fetch("/employee/manage_cus/delete", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ id: id }),
+        });
+
+        if (response.ok) {
+            alert("Delete customer successfully");
+            window.location.reload();
+        } else {
+            alert("Delete customer failed");
+        }
+    }
+    
 }
 
