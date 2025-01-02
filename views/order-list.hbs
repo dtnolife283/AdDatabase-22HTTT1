@@ -1,0 +1,81 @@
+<div class="container mt-4">
+  <div class="filter ms-3 me-3">
+    <span class="filter-name">Orders</span>
+    <button class="filter-button">
+      <span class="filter-icon">
+        <ion-icon name="filter-circle-outline"></ion-icon>
+      </span>
+    </button>
+  </div>
+</div>
+<div class="container mt-4">
+  <div class="filter-content hide ms-3 me-3">
+    <form action="/employee/orders" method="get">
+      <div class="filter-item">
+        <label for="start-date">Start Date</label>
+        <input
+          type="date"
+          name="startDate"
+          id="start-date"
+          class="form-control"
+        />
+      </div>
+      <div class="filter-item">
+        <label for="end-date">End Date</label>
+        <input type="date" name="endDate" id="end-date" class="form-control" />
+      </div>
+      <div class="filter-item">
+        <label for="sort">Sort by ID</label>
+        <select name="sort" id="sort">
+          <option value="asc" selected>Ascending</option>
+          <option value="desc">Descending</option>
+        </select>
+      </div>
+      <div class="filter-actions mt-3">
+        <button type="submit" class="btn btn-primary">Apply Filter</button>
+        <button
+          type="button"
+          id="reset-filters"
+          class="btn btn-secondary"
+        >Reset</button>
+      </div>
+    </form>
+  </div>
+</div>
+<div class="container mt-4">
+  <div class="branch ms-3 me-3">
+    <div class="row">
+      {{#each orders}}
+        <div class="col-md-6">
+          <div class="branch-item card mb-4 shadow">
+            <div class="card-body" id="{{ID_Branch}}">
+              <h5 class="card-title text-primary">
+                <ion-icon name="storefront-outline"></ion-icon>
+                #{{ID_Order}}
+              </h5>
+              <p class="card-text d-flex align-items-center">
+                <i class="bi bi-geo me-2"></i>
+                <span><strong>Order Type:</strong> {{type}}</span>
+              </p>
+              <p class="card-text d-flex align-items-center">
+                <i class="bi bi-telephone me-2"></i>
+                <span><strong>Order Date:</strong>
+                  {{formatDate OrderDate}}</span>
+              </p>
+              <p class="card-text">
+                <i class="bi bi-clock me-2"></i>
+                <strong>Total Price:</strong>
+                {{formatCurrency TotalPrice}}
+              </p>
+              <p class="card-text">
+                <i class="bi bi-clock me-2"></i>
+                <strong>Actual Price:</strong>
+                {{formatCurrency ActualPrice}}
+              </p>
+            </div>
+          </div>
+        </div>
+      {{/each}}
+    </div>
+  </div>
+</div>

@@ -1,0 +1,60 @@
+<body>
+    <div class="container">
+        <h1>Revenue Report</h1>
+
+        <!-- Form for selecting the view type and date range -->
+        <form method="GET" action="/revenue/search">
+            <div class="form-group">
+                <label for="revenueBy">View Revenue By</label>
+                <select id="revenueBy" name="revenueBy" class="form-control">
+                    <option value="branches" {{#if (eq revenueBy "branches")}}selected{{/if}}>Branches</option>
+                    <option value="areas" {{#if (eq revenueBy "areas")}}selected{{/if}}>Areas</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="startDate">Start Date</label>
+                <input type="date" id="startDate" name="startDate" value="{{startDate}}" class="form-control" required>
+            </div>
+
+            <div class="form-group">
+                <label for="endDate">End Date</label>
+                <input type="date" id="endDate" name="endDate" value="{{endDate}}" class="form-control" required>
+            </div>
+
+            <div class="form-group">
+                <label for="searchName">
+                    {{#if (eq revenueBy "branches")}}Search by Branch Name{{else}}Search by Area Name{{/if}}
+                </label>
+                <input type="text" id="searchName" name="searchName" class="form-control" placeholder="Enter name" value="{{searchName}}">
+            </div>
+
+            <button type="submit" class="btn btn-primary">View Revenue</button>
+        </form>
+
+        <!-- Display Revenue Data if available -->
+        {{#if Revenue}}
+            <h2>Revenue by {{#if (eq revenueBy "branches")}}Branch{{else}}Area{{/if}}</h2>
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>{{#if (eq revenueBy "branches")}}Branch Name{{else}}Area Name{{/if}}</th>
+                        <th>Food Item</th>
+                        <th>Total Revenue</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {{#each Revenue}}
+                        <tr>
+                            <td>{{#if (eq revenueBy "branches")}}{{this.BranchName}}{{else}}{{this.AreaName}}{{/if}}</td>
+                            <td>{{this.FoodName}}</td>
+                            <td>${{this.TotalRevenue}}</td>
+                        </tr>
+                    {{/each}}
+                </tbody>
+            </table>
+        {{else}}
+            <p>No revenue data available for the selected criteria.</p>
+        {{/if}}
+    </div>
+</body>

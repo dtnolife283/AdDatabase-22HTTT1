@@ -8,9 +8,11 @@ import viewRoutes from "./routes/view.js";
 import menuRoutes from "./routes/menu.js";
 import manageCusRoutes from "./routes/manage_cus.js";
 import viewEmployeeRoutes from "./routes/view-employee.js";
+import revenueRoutes from "./routes/revenue.js";
 import Handlebars from "handlebars";
 import moveEmployee from "./routes/employee.js";
 import { db } from "./utils/db.js";
+import orderRoutes from "./routes/order.js";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -30,6 +32,12 @@ app.engine(
           return value.toLocaleString("en-US");
         }
         return "0";
+      },
+      formatDate: (date) => {
+        if (date) {
+          return new Date(date).toLocaleDateString("en-US");
+        }
+        return "";
       },
     },
   })
@@ -76,45 +84,44 @@ app.get("/online", async (req, res) => {
 
 app.get("/online/booking", async (req, res) => {
   try {
-    const topBranches = await db("BRANCH")
-      .select("BranchName", "ID_Branch");
+    const topBranches = await db("BRANCH").select("BranchName", "ID_Branch");
     return res.render("booking", {
       customCSS: ["online_booking.css", "online_user_home.css"],
       topBranches: topBranches,
     });
-  } 
-  catch (error) {
-    console.log(error)
+  } catch (error) {
+    console.log(error);
   }
 });
 
-// app.post("/booking", async (req, res) => {
-//   const {date, time, details, numberpeople } = req.body;
+app.post("/booking", async (req, res) => {
+  const {date, time, details, numberpeople } = req.body;
 
-//   try {
-//     // Get the current max ID_Order
-//     const maxIdOrder = await db("ORDER").max("ID_Order as maxId");
-//     const nextIdOrder = maxIdOrder[0].maxId ? maxIdOrder[0].maxId + 1 : 1;
-//     // Save the booking to the database
-//     await db("ORDER").insert({ID_Order: nextIdOrder, OrderDate: date});
-//     await db("RESERVATION_ORDER").insert({ID_Reservation: nextIdOrder, ID_Table: null, ArrivalTime: time, NumberOfPeople: numberpeople, Notes: details})
-//     res.send("Booking successful!");
-//   } catch (error) {
-//     console.error("Error saving booking:", error);
-//     res.status(500).send("An error occurred while processing your booking.");
-//   }
-// });
-
-
+  try {
+    // Get the current max ID_Order
+    const maxIdOrder = await db("ORDER").max("ID_Order as maxId");
+    const nextIdOrder = maxIdOrder[0].maxId ? maxIdOrder[0].maxId + 1 : 1;
+    // Save the booking to the database
+    await db("ORDER").insert({ID_Order: nextIdOrder, OrderDate: date});
+    await db("RESERVATION_ORDER").insert({ID_Reservation: nextIdOrder, ID_Table: null, ArrivalTime: time, NumberOfPeople: numberpeople, Notes: details})
+    res.send("Booking successful!");
+  } catch (error) {
+    console.error("Error saving booking:", error);
+    res.status(500).send("An error occurred while processing your booking.");
+  }
+});
 
 app.use("/employee/manage_cus", manageCusRoutes);
 app.use("/online/view", viewRoutes);
-app.use("/online/menu", menuRoutes); 
+app.use("/online/menu", menuRoutes);
 app.use("/online/online-order", onlineOrderRoutes);
 app.use("/employee/view-employee", viewEmployeeRoutes);
 app.use("/in-restaurant", inRestaurantRoutes);
+app.use("/employee/revenue", revenueRoutes);
+app.use("/revenue/search", revenueRoutes);
 
 app.use("/employee/transfer", moveEmployee);
+app.use("/employee/orders", orderRoutes);
 
 app.listen(port, () => {
   console.log(`Server is running on http://localhost:${port}`);
