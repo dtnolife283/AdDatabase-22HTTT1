@@ -103,6 +103,21 @@ class GetData {
                 'd.DepartmentName'
             );
     }
+
+    async getEmployeeById(id) {
+        return db("EMPLOYEE as e")
+            .join("DEPARTMENT as d", "e.ID_Department", "d.ID_Department")
+            .join("EMPLOYEE_LEAVE_BALANCE as elb", "e.ID_Employee", "elb.ID_Employee")
+            .where("e.ID_Employee", id)
+            .select(
+                "e.*",
+                "d.DepartmentName",
+                "d.Salary",
+                "elb.RemainingDays as RemainingDaysOff",
+                "elb.TotalDays as TotalDaysOff"
+            )
+            .first();
+    }
 }
 
 export default new GetData();

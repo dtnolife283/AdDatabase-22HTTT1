@@ -26,6 +26,19 @@ const viewEmployeeController = {
             }
         )
     },
+
+    getEditEmployeeInfoPage: async (req, res) => {
+        const id = req.params.id;
+        let employee = await getData.getEmployeeById(id);
+        const dob = new Date(employee.DoB);
+        employee.DoB = `${dob.getFullYear()}-${(dob.getMonth() + 1).toString().padStart(2, '0')}-${dob.getDate().toString().padStart(2, '0')}`;
+        res.render('editEmployeeInfo', {
+            layout: 'employee',
+            customCSS: ['online_user_home.css'],
+            customJS: ['editEmployeeInfo.js'],
+            employee: employee,
+        });
+    }
 };
 
 export default viewEmployeeController;
