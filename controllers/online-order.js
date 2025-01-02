@@ -5,7 +5,7 @@ const onlineOrderController = {
     try {
       const allAreas = await db("AREA").select("*");
       res.render("online-order/select-area", {
-        customCSS: ["online_user_home.css"],
+        customCSS: ["online_user_home.css", "view.css"],
         allAreas,
       });
     } catch (err) {
@@ -19,8 +19,13 @@ const onlineOrderController = {
         .select("*")
         .where("ID_Area", areaId);
 
+      allBranches.forEach((branch) => {
+        branch.OpeningHour = branch.OpeningHour.toISOString().slice(11, 16);
+        branch.CloseHour = branch.CloseHour.toISOString().slice(11, 16);
+      });
+
       res.render("online-order/select-branch", {
-        customCSS: ["online_user_home.css"],
+        customCSS: ["online_user_home.css", "view.css"],
         allBranches,
       });
     } catch (err) {
@@ -38,6 +43,7 @@ const onlineOrderController = {
         .select("*")
         .where("ID_Branch", branchId)
         .where("Available", 1)
+        .where("DeliverySafe", 1)
         .join("FOOD_ITEM", "BRANCH_FOOD.ID_Food", "FOOD_ITEM.ID_Food");
 
       res.render("online-order/select-food", {
@@ -196,8 +202,7 @@ const onlineOrderController = {
   },
   postReviewPage: async (req, res, next) => {
     const orderId = req.params.orderId;
-    const { service, food, branch, price, reviewText, order } = req.body;
-    console.log(service, food, branch, price, reviewText, order);
+    const { service, food, branch, price, reviewText } = req.body;
     try {
       const latestReview = await db("REVIEW").max("ID_Review as ID").first();
       const newReviewId = latestReview.ID + 1;

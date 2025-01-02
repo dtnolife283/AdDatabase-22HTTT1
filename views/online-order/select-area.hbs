@@ -9,33 +9,33 @@
       </p>
     </div>
   </section>
-
-  <div class="album py-5">
-    <div class="container">
+  <div class="container mt-4">
+    <div class="branch ms-3 me-3">
       <div class="row">
         {{#each allAreas}}
-          <div class="col-md-4">
-            <div class="card mb-4 box-shadow">
-              {{! <img
-                class="card-img-top"
-                data-src="holder.js/100px225?theme=thumb&amp;bg=55595c&amp;fg=eceeef&amp;text=Thumbnail"
-                alt="Thumbnail [100%x225]"
-                style="height: 225px; width: 100%; display: block;"
-                src="https://img.goodfon.com/wallpaper/big/c/ba/gta-5-los-santos-rokstar-gorod.webp"
-                data-holder-rendered="true"
-              /> }}
-              <div class="card-body">
-                <p class="cart-title"><strong>{{AreaName}}</strong></p>
-                <p class="card-text">Beautiful area, come eat.</p>
-                <div class="d-flex justify-content-between align-items-center">
-                  <div class="btn-group">
-                    <a
-                      href="/online/online-order/area/{{ID_Area}}"
-                      type="button"
-                      class="btn btn-sm btn-outline-secondary"
-                    >Select</a>
-                  </div>
-                </div>
+          <div class="col-md-6">
+            <div class="branch-item card mb-4 shadow">
+              <div class="card-body" id="{{ID_Branch}}">
+                <h5 class="card-title text-primary">
+                  <ion-icon name="storefront-outline"></ion-icon>
+                  <a
+                    href="/online/online-order/area/{{ID_Area}}"
+                    style="text-decoration: none; color: black"
+                  >{{AreaName}}</a>
+                </h5>
+                <p class="card-text">
+                  <strong>Description: </strong>
+                  beautiful restaurant, come eat.
+                </p>
+              </div>
+              <div class="card-footer text-end">
+                <a
+                  href="/online/online-order/area/{{ID_Area}}"
+                  class="btn btn-sm btn-outline-primary"
+                >
+                  <i class="bi bi-clipboard me-1"></i>
+                  Select
+                </a>
               </div>
             </div>
           </div>
@@ -43,5 +43,4 @@
       </div>
     </div>
   </div>
-
 </main>
