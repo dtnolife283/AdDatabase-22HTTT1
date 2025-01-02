@@ -13,4 +13,6 @@ router.post("/delete", managerCusController.confirmDeletion);
 
 router.get("/add", managerCusController.addCus);
 
+router.post("/confirm-add", managerCusController.confirmAdd);
+
 export default router;

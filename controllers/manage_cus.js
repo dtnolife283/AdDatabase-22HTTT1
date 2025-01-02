@@ -78,6 +78,24 @@ const managerCusController = {
             res.status(500).send("Server Error");
         }
     },
+
+    confirmAdd: async (req, res) => {
+        try {
+            const { id, name, email, phone, ssid, gender } = req.body;
+            console.log(req.body);
+            await db("CUSTOMER").insert({
+                ID_CUSTOMER: id,
+                CustomerName: name,
+                Email: email,
+                PhoneNumber: phone,
+                SSID: ssid, 
+                Gender: gender,
+            });
+        } catch (err) {
+            console.error(err);
+            res.status(500).send("Server Error");
+        }
+    }
 };
 
 
