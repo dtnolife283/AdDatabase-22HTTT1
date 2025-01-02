@@ -41,6 +41,54 @@ const orderController = {
       return res.status(500).json({ message: err.message });
     }
   },
+  updateOrder: async (req, res) => {
+    const orderId = req.params.orderId;
+    try {
+      const order = await db("ORDER")
+        .select("ID_Order", "ID_Employee")
+        .where("ID_Order", orderId)
+        .first();
+
+      res.render("update-order", {
+        customCSS: ["online_user_home.css", "view.css"],
+        cdnCSS:
+          '<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>',
+        order,
+        errorMessage: "",
+      });
+    } catch (err) {
+      return res.status(500).json({ message: err.message });
+    }
+  },
+  postUpdateOrder: async (req, res, next) => {
+    const { employeeId } = req.body;
+    const orderId = req.params.orderId;
+    try {
+      const employee = await db("EMPLOYEE")
+        .select("ID_Employee")
+        .where("ID_Employee", employeeId)
+        .first();
+      const order = await db("ORDER")
+        .select("ID_Order", "ID_Employee")
+        .where("ID_Order", orderId)
+        .first();
+      if (!employee) {
+        return res.status(404).render("update-order", {
+          customCSS: ["online_user_home.css", "view.css"],
+          cdnCSS:
+            '<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>',
+          order,
+          errorMessage: "Employee not found!",
+        });
+      }
+      await db("ORDER")
+        .where("ID_Order", orderId)
+        .update({ ID_Employee: employeeId });
+      res.status(201).redirect(req.originalUrl);
+    } catch (err) {
+      return res.status(500).json({ message: err.message });
+    }
+  },
 };
 
 export default orderController;
