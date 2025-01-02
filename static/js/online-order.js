@@ -4,11 +4,6 @@ const totalItemsLabel = document.getElementById("total-items-label");
 
 const placeOrder = document.getElementById("place-order");
 
-const formatter = new Intl.NumberFormat("en-US", {
-  style: "decimal", // Change from "currency" to "decimal"
-  maximumFractionDigits: 2,
-});
-
 placeOrder.addEventListener("click", async function () {
   const result = await Swal.fire({
     title: "Are you sure?",

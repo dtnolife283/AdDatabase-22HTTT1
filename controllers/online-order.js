@@ -61,7 +61,7 @@ const onlineOrderController = {
         cdnJS:
           '<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>',
         customCSS: ["online_user_home.css"],
-        customJS: ["online-order.js"],
+        customJS: ["online-order.js", "priceFormat.js", "close-bill.js"],
         branchId,
         areaId: branch.ID_Area,
         redirectUrl: req.baseUrl,

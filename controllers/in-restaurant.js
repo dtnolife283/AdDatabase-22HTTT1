@@ -18,10 +18,11 @@ const inRestaurantController = {
         cdnJS:
           '<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>',
         customCSS: ["online_user_home.css"],
-        customJS: ["in-restaurant.js"],
+        customJS: ["in-restaurant.js", "priceFormat.js", "close-bill.js"],
         branchId,
         areaId: branch.ID_Area,
         allFoods,
+        inRestaurant: true,
       });
     } catch (err) {
       console.log(err);
@@ -32,7 +33,17 @@ const inRestaurantController = {
       const data = req.body;
       const membershipId = data.membershipId;
       const branchId = data.branchId;
+      const tableId = data.tableId;
 
+      const table = await db("TABLE")
+        .select("ID_Table")
+        .where("ID_Table", tableId)
+        .where("ID_Branch", branchId)
+        .first();
+
+      if (!table) {
+        return res.status(400).json({ message: "Table not found" });
+      }
       // Fetch discount percentage
       const memberLevel = await db("MEMBERSHIP")
         .join("MEM_LEVEL", "MEMBERSHIP.ID_Level", "=", "MEM_LEVEL.ID_Level")
@@ -58,7 +69,7 @@ const inRestaurantController = {
 
         const newOrder = {
           ID_Order: newOrderId,
-          ID_Table: null,
+          ID_Table: table?.ID_Table,
           TotalPrice: 0,
           ActualPrice: 0,
           ID_Customer: customer ? customer.ID_Customer : null,

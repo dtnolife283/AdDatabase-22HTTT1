@@ -4,12 +4,29 @@ const totalItemsLabel = document.getElementById("total-items-label");
 
 const placeOrder = document.getElementById("place-order");
 
-const formatter = new Intl.NumberFormat("en-US", {
-  style: "decimal", // Change from "currency" to "decimal"
-  maximumFractionDigits: 2,
-});
+const tableElement = document.getElementById("table-id");
 
 placeOrder.addEventListener("click", async function () {
+  if (!tableElement.value) {
+    let timerInterval;
+    Swal.fire({
+      title: "Please enter your table ID!",
+      timer: 2000,
+      timerProgressBar: true,
+      didOpen: () => {
+        Swal.showLoading();
+      },
+      willClose: () => {
+        clearInterval(timerInterval);
+      },
+    }).then((result) => {
+      /* Read more about handling dismissals below */
+      if (result.dismiss === Swal.DismissReason.timer) {
+        console.log("I was closed by the timer");
+      }
+    });
+    return;
+  }
   const result = await Swal.fire({
     title: "Are you sure?",
     text: "Do you want to place this order?",
@@ -29,6 +46,7 @@ placeOrder.addEventListener("click", async function () {
     cart: cart,
     membershipId: document.getElementById("membership-id").value,
     branchId: document.getElementById("branch-id").value,
+    tableId: tableElement.value,
   };
 
   if (orderId) {
@@ -57,6 +75,7 @@ placeOrder.addEventListener("click", async function () {
       if (result.isConfirmed) {
         const newUrl = `${window.location.pathname}?orderId=${orderId}`;
         window.history.pushState({ path: newUrl }, "", newUrl);
+        tableElement.disabled = true;
       } else {
         const bill = data.bill;
         populateBillModal(bill, orderId);
@@ -137,9 +156,3 @@ function updateTotalItems() {
   totalItemsLabel.innerText = totalItems;
   placeOrder.disabled = totalItems === 0;
 }
-
-document.getElementById("close-bill").addEventListener("click", function () {
-  const newUrl = window.location.pathname;
-  window.history.pushState({ path: newUrl }, "", newUrl);
-  window.location.reload();
-});
