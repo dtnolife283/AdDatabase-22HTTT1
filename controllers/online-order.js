@@ -4,9 +4,19 @@ const onlineOrderController = {
   getOrderPage: async (req, res, next) => {
     try {
       const allAreas = await db("AREA").select("*");
+      const redirectUrl = req.baseUrl;
+
+      const urlParts = redirectUrl.split("/").filter(Boolean); // Split by "/" and filter out empty strings
+
+      // Check if the first part exists and use the first part, else fallback to "/"
+      const firstPart = urlParts.length > 0 ? `/${urlParts[0]}` : "/"; // If no parts exist, return "/"
+
       res.render("online-order/select-area", {
         customCSS: ["online_user_home.css", "view.css"],
         allAreas,
+        redirectUrl,
+        backUrl: firstPart,
+        hasBackButton: firstPart !== redirectUrl,
       });
     } catch (err) {
       console.log(err);
@@ -27,6 +37,7 @@ const onlineOrderController = {
       res.render("online-order/select-branch", {
         customCSS: ["online_user_home.css", "view.css"],
         allBranches,
+        redirectUrl: req.baseUrl,
       });
     } catch (err) {
       console.log(err);
@@ -50,9 +61,10 @@ const onlineOrderController = {
         cdnJS:
           '<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>',
         customCSS: ["online_user_home.css"],
-        customJS: ["online-order.js"],
+        customJS: ["online-order.js", "priceFormat.js", "close-bill.js"],
         branchId,
         areaId: branch.ID_Area,
+        redirectUrl: req.baseUrl,
         allFoods,
       });
     } catch (err) {
@@ -168,12 +180,12 @@ const onlineOrderController = {
       return res.status(201).json({
         message: "Order placed successfully",
         orderId: newOrderId,
-        bill: JSON.stringify({
+        bill: {
           totalAmount,
           totalPrice,
           actualPrice,
           orderFoods,
-        }),
+        },
       });
     } catch (err) {
       return res.status(500).json({ message: err.message });

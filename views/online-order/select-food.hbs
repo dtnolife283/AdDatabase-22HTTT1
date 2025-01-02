@@ -6,7 +6,7 @@
         quantity, and place your order!</p>
       <p>
         <a
-          href="/online/online-order/area/{{areaId}}"
+          href="{{redirectUrl}}/area/{{areaId}}"
           class="btn btn-primary my-2"
         >Go back</a>
       </p>
@@ -28,10 +28,19 @@
               id="branch-id"
               value="{{branchId}}"
             />
+            {{#if inRestaurant}}
+              <input
+                type="text"
+                id="table-id"
+                class="form-control my-2"
+                placeholder="Enter your table ID"
+                required
+              />
+            {{/if}}
             <input
               type="text"
               id="membership-id"
-              class="form-control mt-2"
+              class="form-control mb-2"
               placeholder="Enter your membership ID"
             />
             <button
@@ -116,6 +125,7 @@
         <div class="modal-footer">
           <a id="review-link" class="btn btn-primary">Proceed to Review</a>
           <button
+            id="close-bill"
             type="button"
             class="btn btn-secondary"
             data-bs-dismiss="modal"

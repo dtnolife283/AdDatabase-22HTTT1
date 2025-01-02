@@ -1,0 +1,26 @@
+<div class="container mt-3">
+    <h2>Edit Customer</h2>
+    <form id="editCustomerForm">
+        <input type="hidden" name="id" value="{{customer.ID_Customer}}">
+        <div class="form-group">
+            <label for="name">Name:</label>
+            <input type="text" class="form-control" id="name" name="name" value="{{customer.CustomerName}}" required>
+        </div>
+        <div class="form-group">
+            <label for="phone">Phone Number:</label>
+            <input type="text" class="form-control" id="phone" name="phone" value="{{customer.PhoneNumber}}" required>
+        </div>
+        <div class="form-group">
+            <label for="gender">Gender:</label>
+            <select class="form-control" id="gender" name="gender">
+                <option value="M" {{#if (eq customer.Gender "M")}}selected{{/if}}>Male</option>
+                <option value="F" {{#if (eq customer.Gender "F")}}selected{{/if}}>Female</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="email">Email:</label>
+            <input type="email" class="form-control" id="email" name="email" value="{{customer.Email}}" required>
+        </div>
+        <button type="button" class="btn btn-success" onclick="updateCustomer()">Save Changes</button>
+    </form>
+</div>

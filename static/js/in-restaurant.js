@@ -4,7 +4,29 @@ const totalItemsLabel = document.getElementById("total-items-label");
 
 const placeOrder = document.getElementById("place-order");
 
+const tableElement = document.getElementById("table-id");
+
 placeOrder.addEventListener("click", async function () {
+  if (!tableElement.value) {
+    let timerInterval;
+    Swal.fire({
+      title: "Please enter your table ID!",
+      timer: 2000,
+      timerProgressBar: true,
+      didOpen: () => {
+        Swal.showLoading();
+      },
+      willClose: () => {
+        clearInterval(timerInterval);
+      },
+    }).then((result) => {
+      /* Read more about handling dismissals below */
+      if (result.dismiss === Swal.DismissReason.timer) {
+        console.log("I was closed by the timer");
+      }
+    });
+    return;
+  }
   const result = await Swal.fire({
     title: "Are you sure?",
     text: "Do you want to place this order?",
@@ -16,12 +38,22 @@ placeOrder.addEventListener("click", async function () {
   if (!result.isConfirmed) {
     return;
   }
+
+  const urlParams = new URLSearchParams(window.location.search);
+  const orderId = urlParams.get("orderId");
+
   const requestBody = {
     cart: cart,
     membershipId: document.getElementById("membership-id").value,
     branchId: document.getElementById("branch-id").value,
+    tableId: tableElement.value,
   };
-  const response = await fetch("/online/online-order/place-order", {
+
+  if (orderId) {
+    requestBody.orderId = orderId;
+  }
+
+  const response = await fetch("/in-restaurant/place-order", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -30,11 +62,29 @@ placeOrder.addEventListener("click", async function () {
   });
   const data = await response.json();
   if (response.ok) {
-    const bill = data.bill;
     const orderId = data.orderId;
-    populateBillModal(bill, orderId);
-    const billModal = new bootstrap.Modal(document.getElementById("billModal"));
-    billModal.show();
+    Swal.fire({
+      title: "Order placed successfully!",
+      text: "Do you want anything else?",
+      icon: "success",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, order more!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        const newUrl = `${window.location.pathname}?orderId=${orderId}`;
+        window.history.pushState({ path: newUrl }, "", newUrl);
+        tableElement.disabled = true;
+      } else {
+        const bill = data.bill;
+        populateBillModal(bill, orderId);
+        const billModal = new bootstrap.Modal(
+          document.getElementById("billModal")
+        );
+        billModal.show();
+      }
+    });
   } else {
     Swal.fire({
       icon: "error",
@@ -72,7 +122,7 @@ function populateBillModal(bill, orderId) {
     <h6>Actual Price (after discount): ${actualPrice} VNĐ</h6>`;
 
   const reviewLink = document.getElementById("review-link");
-  reviewLink.href = `/online/online-order/review/${orderId}`;
+  reviewLink.href = `/in-restaurant/review/${orderId}`;
 }
 
 document.querySelector(".row").addEventListener("click", function (e) {

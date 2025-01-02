@@ -17,21 +17,9 @@
                             <div class="form-floating">
                                 <select class="form-select" id="branchSelect" required>
                                     <option value="">Select a Branch</option>
-                                    <option value="1">Worry Sushi Haven</option>
-                                    <option value="2">Green Sushi Garden</option>
-                                    <option value="3">Key Sushi Spot</option>
-                                    <option value="4">Would Sushi Hub</option>
-                                    <option value="5">May Sushi Bar</option>
-                                    <option value="6">Baby Sushi Haven</option>
-                                    <option value="7">Technology Sushi Bay</option>
-                                    <option value="8">They Sushi Bar</option>
-                                    <option value="9">Character Sushi Hub</option>
-                                    <option value="10">Campaign Sushi Bar</option>
-                                    <option value="11">Season Sushi Bar</option>
-                                    <option value="12">Class Sushi Hub</option>
-                                    <option value="13">Wind Sushi Garden</option>
-                                    <option value="14">Garden Sushi Factory</option>
-                                    <option value="15">Increase Sushi Palace</option>
+                                    {{#each topBranches}}
+                                        <option>{{BranchName}}</option>
+                                    {{/each}}
                                 </select>
                                 <label for="branchSelect">Select Branch</label>
                             </div>

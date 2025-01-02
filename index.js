@@ -3,10 +3,14 @@ import { engine } from "express-handlebars";
 import path from "path";
 import { fileURLToPath } from "url";
 import onlineOrderRoutes from "./routes/online-order.js";
+import inRestaurantRoutes from "./routes/in-restaurant.js";
 import viewRoutes from "./routes/view.js";
 import menuRoutes from "./routes/menu.js";
+import manageCusRoutes from "./routes/manage_cus.js";
+import viewEmployeeRoutes from "./routes/view-employee.js";
 import Handlebars from "handlebars";
 import moveEmployee from "./routes/employee.js";
+import { db } from "./utils/db.js";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -57,43 +61,60 @@ app.get("/select-user", (req, res) => {
   });
 });
 
-app.get('/employee', (req, res) => {
-  res.render('employeeFeatures', {
-    layout: 'employee',
+app.get("/employee", (req, res) => {
+  res.render("employeeFeatures", {
+    layout: "employee",
     customCSS: ["online_user_home.css", "employeeFeatures.css"],
   });
 });
 
 app.get("/online", async (req, res) => {
-  res.render("home", {
+  res.render("customer_home", {
     customCSS: ["online_user_home.css"],
   });
 });
 
-app.get("/online/booking", (req, res) => {
-  res.render("booking", {
-    customCSS: ["online_booking.css", "online_user_home.css"], // Include relevant CSS for booking
-  });
-});
-
-app.post("/booking", async (req, res) => {
-  const { name, date, time, details } = req.body;
-
+app.get("/online/booking", async (req, res) => {
   try {
-    // Save the booking to the database
-    await db("bookings").insert({ name, date, time, details });
-    res.send("Booking successful!");
-  } catch (error) {
-    console.error("Error saving booking:", error);
-    res.status(500).send("An error occurred while processing your booking.");
+    const topBranches = await db("BRANCH")
+      .select("BranchName", "ID_Branch");
+    return res.render("booking", {
+      customCSS: ["online_booking.css", "online_user_home.css"],
+      topBranches: topBranches,
+    });
+  } 
+  catch (error) {
+    console.log(error)
   }
 });
 
-app.use("/online/view", viewRoutes);
-app.use("/online/menu", menuRoutes);
-app.use("/online/online-order", onlineOrderRoutes);
+// app.post("/booking", async (req, res) => {
+//   const {date, time, details, numberpeople } = req.body;
 
-app.use("/online", moveEmployee);
+//   try {
+//     // Get the current max ID_Order
+//     const maxIdOrder = await db("ORDER").max("ID_Order as maxId");
+//     const nextIdOrder = maxIdOrder[0].maxId ? maxIdOrder[0].maxId + 1 : 1;
+//     // Save the booking to the database
+//     await db("ORDER").insert({ID_Order: nextIdOrder, OrderDate: date});
+//     await db("RESERVATION_ORDER").insert({ID_Reservation: nextIdOrder, ID_Table: null, ArrivalTime: time, NumberOfPeople: numberpeople, Notes: details})
+//     res.send("Booking successful!");
+//   } catch (error) {
+//     console.error("Error saving booking:", error);
+//     res.status(500).send("An error occurred while processing your booking.");
+//   }
+// });
+
+
+
+app.use("/employee/manage_cus", manageCusRoutes);
+app.use("/online/view", viewRoutes);
+app.use("/online/menu", menuRoutes); 
+app.use("/online/online-order", onlineOrderRoutes);
+app.use("/employee/view-employee", viewEmployeeRoutes);
+app.use("/in-restaurant", inRestaurantRoutes);
+
+app.use("/employee", moveEmployee);
 
 app.listen(port, () => {
   console.log(`Server is running on http://localhost:${port}`);
