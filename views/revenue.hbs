@@ -3,7 +3,7 @@
         <h1>Revenue Report</h1>
 
         <!-- Form for selecting the view type and date range -->
-        <form method="GET" action="/revenue/search">
+        <form method="GET" action="/employee/revenue/search">
             <div class="form-group">
                 <label for="revenueBy">View Revenue By</label>
                 <select id="revenueBy" name="revenueBy" class="form-control">
@@ -38,7 +38,6 @@
             <table class="table table-bordered">
                 <thead>
                     <tr>
-                        <th>{{#if (eq revenueBy "branches")}}Branch Name{{else}}Area Name{{/if}}</th>
                         <th>Food Item</th>
                         <th>Total Revenue</th>
                     </tr>
@@ -46,9 +45,8 @@
                 <tbody>
                     {{#each Revenue}}
                         <tr>
-                            <td>{{#if (eq revenueBy "branches")}}{{this.BranchName}}{{else}}{{this.AreaName}}{{/if}}</td>
                             <td>{{this.FoodName}}</td>
-                            <td>${{this.TotalRevenue}}</td>
+                            <td>{{this.totalRevenue}}</td>
                         </tr>
                     {{/each}}
                 </tbody>
