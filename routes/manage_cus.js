@@ -7,5 +7,6 @@ router.get("/", managerCusController.getAllCus);
 
 router.get("/edit/:id", managerCusController.editCus);
 
+router.post("/update", managerCusController.updateCus);
 
 export default router;
