@@ -118,6 +118,10 @@ class GetData {
             )
             .first();
     }
+
+    async getDepartments() {
+        return db("DEPARTMENT").select("*");
+    }
 }
 
 export default new GetData();
