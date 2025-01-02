@@ -73,23 +73,19 @@ app.get("/online", async (req, res) => {
   });
 });
 
-// app.get("/online/booking", async (req, res) => {
-//   try {
-//     const topBranches = await db("BRANCH")
-//       .select("BranchName", "ID_Branch");
-//     console.log(topBranches);
-//     return res.render("booking", {
-//       customCSS: ["online_booking.css", "online_user_home.css"],
-//       topBranches: topBranches,
-//     });
-//   } catch (error) {
-//     console.log(error)
-//     return res.render("booking", {
-//       customCSS: ["online_booking.css", "online_user_home.css"],
-//       topBranches: [],
-//     });
-//   }
-// });
+app.get("/online/booking", async (req, res) => {
+  try {
+    const topBranches = await db("BRANCH")
+      .select("BranchName", "ID_Branch");
+    return res.render("booking", {
+      customCSS: ["online_booking.css", "online_user_home.css"],
+      topBranches: topBranches,
+    });
+  } 
+  catch (error) {
+    console.log(error)
+  }
+});
 
 // app.post("/booking", async (req, res) => {
 //   const {date, time, details, numberpeople } = req.body;

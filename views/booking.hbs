@@ -17,8 +17,8 @@
                             <div class="form-floating">
                                 <select class="form-select" id="branchSelect" required>
                                     <option value="">Select a Branch</option>
-                                    {{#each branches}}
-                                        <option value="{{ID_Branch}}">{{BranchName}}</option>
+                                    {{#each topBranches}}
+                                        <option>{{BranchName}}</option>
                                     {{/each}}
                                 </select>
                                 <label for="branchSelect">Select Branch</label>

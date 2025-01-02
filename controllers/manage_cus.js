@@ -22,7 +22,7 @@ const managerCusController = {
             const customer = await db("CUSTOMER").where("ID_CUSTOMER", customerId).first();
 
             res.render("manage_cus/edit_cus", {
-                customCSS: ['online_user_home.css'],
+                customCSS: ['online_user_home.css', 'view.css'],
                 customJS: ["edit_customer.js"],
                 layout: "employee",
                 customer: customer,

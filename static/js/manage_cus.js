@@ -1,20 +1,22 @@
 function filterCustomers() {
     const searchInput = document.getElementById("searchBar").value.toLowerCase();
-    const tableRows = document.querySelectorAll("#customerTable tr");
+    const customerCards = document.querySelectorAll(".customer-card");
 
-    tableRows.forEach((row) => {
-        const name = row.cells[1].textContent.toLowerCase();
-        const email = row.cells[4].textContent.toLowerCase();
-        const ssid = row.cells[5].textContent.toLowerCase();
+    customerCards.forEach((card) => {
+        const name = card.querySelector(".card-title").textContent.toLowerCase();
+        const email = card.querySelector(".card-text:nth-of-type(3)").textContent.toLowerCase();
+        const ssid = card.querySelector(".card-text:nth-of-type(4)").textContent.toLowerCase();
 
         if (
             name.includes(searchInput) ||
             email.includes(searchInput) ||
             ssid.includes(searchInput)
         ) {
-            row.style.display = ""; // Show the row
+            card.style.display = "";
         } else {
-            row.style.display = "none"; // Hide the row
+            card.style.display = "none";
         }
     });
 }
+
+
