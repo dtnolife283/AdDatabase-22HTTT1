@@ -1,0 +1,64 @@
+<div class="container mt-5 main-container">
+    <h1 class="mb-4">Transfer Employee</h1>
+
+    {{#if success}}
+        <div class="alert alert-success" id="success-alert">Employee transfer was successful!</div>
+    {{/if}}
+
+    {{#if error}}
+        <div class="alert alert-danger" id="error-alert">
+            {{#if (eq message "already-in-branch")}}
+                Employee is already in the selected branch.
+            {{else}}
+                Employee transfer failed. Please try again.
+            {{/if}}
+        </div>
+    {{/if}}
+
+    <form action="/online/transfer" method="POST" class="row g-3">
+        <div class="col-md-6 transfer-emp">
+            <label for="employeeID" class="form-label">Employee</label>
+            <select id="employeeID" name="employeeID" class="form-select" required>
+                {{#each employees}}
+                <option value="{{this.ID_Employee}}">
+                    {{this.ID_Employee}} - {{this.EmployeeName}} ({{this.BranchName}})
+                </option>
+                {{/each}}
+            </select>
+        </div>
+
+        <div class="col-md-6 transfer-emp">
+            <label for="newBranchID" class="form-label">New Branch</label>
+            <select id="newBranchID" name="newBranchID" class="form-select" required>
+                {{#each branches}}
+                <option value="{{this.BranchID}}">{{this.BranchName}}</option>
+                {{/each}}
+            </select>
+        </div>
+
+        <div class="col-12">
+            <div class="d-flex justify-content-center">
+                <button type="submit" class="btn btn-primary btn-lg">Transfer</button>
+            </div>
+        </div>
+    </form>
+    <script>
+        //timeout the alert after 5 seconds
+        setTimeout( () => {
+            const successAlert = document.getElementById('success-alert');
+            const errorAlert = document.getElementById('error-alert');
+            if (successAlert) {
+                successAlert.style.transition = "opacity 0.5s ease-out";
+                successAlert.style.opacity = 0;
+                setTimeout(() => successAlert.remove(), 500);
+            }
+
+            if (errorAlert) {
+                errorAlert.style.transition = "opacity 0.5s ease-out";
+                errorAlert.style.opacity = 0;
+                setTimeout(() => errorAlert.remove(), 500);
+            }
+         
+        }, 5000);
+    </script>
+</div>

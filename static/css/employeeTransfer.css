@@ -1,0 +1,20 @@
+@import url('varialble.css');
+
+.transfer-emp select {
+    padding: 20px;
+    border: var(--text-color);
+    background-color: var(--secondary-color-1);
+}
+
+.btn-primary {
+    border: var(--secondary-color-1);
+    border-radius: 28px;
+    padding: 10px 20px;
+    margin-top: 30px;
+    background: var(--secondary-color-3);
+    transition: all 0.2s ease-out;
+}
+.btn-primary:hover {
+    background: var(--secondary-color-4);
+    transform: scale(1.2);
+}
