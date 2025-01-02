@@ -1,0 +1,24 @@
+<div class="container col-lg-6 my-5 bg-light p-4">
+  {{#if order}}
+    {{#if order.ID_Employee}}
+    <div class="lead text-center">Employee updated for order #{{order.ID_Order}}</div>
+    {{else}}
+    <h2 class="mb-3">Update employee ID - Order #{{order.ID_Order}}</h2>
+    <form action="" method="POST">
+      <div class="mb-3">
+        <input
+          id="employeeId"
+          class="form-control"
+          rows="3"
+          name="employeeId"
+          placeholder="Enter employee ID"
+        ></input>
+      </div>
+      {{#if errorMessage}}<div class="text-start text-danger mb-3">{{errorMessage}}</div>{{/if}}
+      <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+    {{/if}}
+  {{else}}
+  <div class="lead text-center">This order doesn't exist ;(</div>
+  {{/if}}
+</div>

@@ -90,6 +90,15 @@
                   <span class="text-danger">No review</span>
                 {{/if}}
               </p>
+              <p class="card-text">
+                <i class="bi bi-person"></i>
+                <strong>Employee ID:</strong>
+                {{#if ID_Employee}}
+                  {{ID_Employee}}
+                {{else}}
+                  <a href="/employee/orders/{{ID_Order}}/update">Add employee</a>
+                {{/if}}
+              </p>
             </div>
           </div>
         </div>
