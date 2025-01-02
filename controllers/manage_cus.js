@@ -23,7 +23,7 @@ const managerCusController = {
 
             res.render("manage_cus/edit_cus", {
                 customCSS: ['online_user_home.css', 'view.css'],
-                customJS: ["edit_customer.js"],
+                customJS: ["manage_cus.js"],
                 layout: "employee",
                 customer: customer,
             });
@@ -32,20 +32,22 @@ const managerCusController = {
             res.status(500).send("Server Error");
         }
     },
-
-    updateCustomer: async (req, res) => {
+    
+    updateCus: async (req, res) => {
         try {
-            const customerId = req.params.id;
-            const customerData = req.body;
-            console.log(customerData);
-
-            res.json({ message: "Customer updated successfully!" });
+            const { id, name, email, phone, ssid, gender } = req.body;
+            await db("CUSTOMER").where("ID_CUSTOMER", id).update({
+                CustomerName: name,
+                Email: email,
+                PhoneNumber: phone,
+                SSID: ssid,
+            })
         } catch (err) {
             console.error(err);
-            res.status(500).json({ message: "An error occurred while updating the customer." });
+            res.status(500).send("Server Error");
         }
-    }
-    
+    },
+
 };
 
 export default managerCusController;
