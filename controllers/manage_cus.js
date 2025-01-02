@@ -5,7 +5,7 @@ const managerCusController = {
         try{
             const allCus = await db("CUSTOMER").select("*");
             res.render("manage_cus", {
-                customCSS: ['online_user_home.css', 'viewEmployee.css'],
+                customCSS: ['online_user_home.css', 'viewEmployee.css', 'view.css'],
                 customJS: ["manage_cus.js"],
                 layout: "employee",
                 allCus: allCus,
