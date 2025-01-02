@@ -56,6 +56,13 @@ app.get("/select-user", (req, res) => {
   });
 });
 
+app.get('/employee', (req, res) => {
+  res.render('employeeFeatures', {
+    layout: 'employee',
+    customCSS: ["online_user_home.css", "employeeFeatures.css"],
+  });
+});
+
 app.get("/online", async (req, res) => {
   res.render("home", {
     customCSS: ["online_user_home.css"],

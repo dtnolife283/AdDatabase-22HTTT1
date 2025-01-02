@@ -1,0 +1,45 @@
+.features {
+    display: flex;
+    justify-content: center;
+    align-items: stretch; /* Ensures buttons have equal height */
+    gap: 30px;
+    margin-top: 20px;
+    flex-wrap: wrap;
+}
+
+.features a {
+    flex: 1 1 calc(25% - 30px); /* Flex item takes up 25% width minus the gap */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    font-weight: bold;
+    padding: 20px 40px;
+    border: 2px solid var(--secondary-color-4);
+    border-radius: 8px;
+    color: var(--secondary-color-4);
+    background-color: var(--primary-btn-color);
+    transition: all 0.3s ease;
+    font-size: 1.5rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+.features a:hover {
+    background-color: var(--primary-btn-hover-color);
+    color: white;
+    transform: scale(1.05);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+.features a i {
+    margin-right: 10px;
+    font-size: 2rem; /* Increased icon size */
+    color: var(--secondary-color-3); /* Icon color */
+}
+
+@media (min-width: 768px) {
+    .features {
+        gap: 40px;
+    }
+}
