@@ -7,5 +7,6 @@ router.get('/', viewEmployeeController.getViewEmployeePage);
 router.get('/edit/:id', viewEmployeeController.getEditEmployeeInfoPage);
 router.post('/edit/:id', viewEmployeeController.postEditEmployeeInfo);
 router.post('/delete/:id', viewEmployeeController.postDeleteEmployee);
+router.post('/add', viewEmployeeController.postAddEmployee);
 
 export default router;

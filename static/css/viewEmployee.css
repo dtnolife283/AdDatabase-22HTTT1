@@ -14,6 +14,18 @@ a.btn-outline-primary:hover {
     border: 1px solid var(--text-color);
 }
 
+button.btn-outline-primary:hover {
+    background-color: var(--primary-btn-hover-color);
+    border: 1px solid var(--text-color);
+}
+
+button.btn-outline-primary:active,
+button.btn-outline-primary:focus,
+button.btn-outline-primary:active:focus {
+    background-color: var(--primary-btn-hover-color);
+    border: 1px solid var(--text-color);
+}
+
 button.btn-outline-danger:hover {
     background-color: var(--secondary-color-3);
     color: var(--background-color);
@@ -23,6 +35,20 @@ button.btn-outline-danger:hover {
 button.btn-outline-danger:active,
 button.btn-outline-danger:focus,
 button.btn-outline-danger:active:focus {
+    background-color: var(--secondary-color-3);
+    color: var(--background-color);
+    border: 1px solid var(--text-color);
+}
+
+button.btn-outline-secondary:hover {
+    background-color: var(--secondary-color-3);
+    color: var(--background-color);
+    border: 1px solid var(--text-color);
+}
+
+button.btn-outline-secondary:active,
+button.btn-outline-secondary:focus,
+button.btn-outline-secondary:active:focus {
     background-color: var(--secondary-color-3);
     color: var(--background-color);
     border: 1px solid var(--text-color);
@@ -50,6 +76,28 @@ button.btn-outline-danger:active:focus {
     box-shadow: 0 0 0 2px var(--secondary-color-4);
 }
 
-select {
+.filter select#branch {
     width: 200px !important;
+}
+
+.modal-content {
+    background-color: var(--background-color);
+    color: var(--text-color);
+    border-radius: 8px;
+}
+
+.modal-header {
+    background-color: var(--text-color);
+    color: white;
+    border-bottom: 2px solid var(--secondary-color-1);
+    padding: 15px;
+}
+
+.modal-title {
+    font-weight: bold;
+    font-size: 1.25rem;
+}
+
+.modal-body {
+    padding: 20px;
 }

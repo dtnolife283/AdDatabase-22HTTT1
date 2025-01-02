@@ -6,6 +6,7 @@ const viewEmployeeController = {
     getViewEmployeePage: async (req, res) => {
         const branch = req.query.branch;
         const branches = await getData.getSimpleBranches();
+        const departments = await getData.getDepartments();
         let employees = await getData.getEmployees(branch);
         employees = employees.map(employee => {
             const dob = new Date(employee.DoB);
@@ -22,6 +23,7 @@ const viewEmployeeController = {
             customCSS: ['online_user_home.css', 'view.css', 'viewEmployee.css'],
             customJS: ['view.js', 'viewEmployee.js'],
             branches: branches,
+            departments: departments,
             employees: employees,
             selectedBranch,
             }
@@ -54,6 +56,12 @@ const viewEmployeeController = {
     postDeleteEmployee: async (req, res) => {
         const id = req.params.id;
         await postData.postDeleteEmployee(id);
+        res.redirect('/employee/view-employee');
+    },
+
+    postAddEmployee: async (req, res) => {
+        const employee = req.body;
+        await postData.postAddEmployee(employee);
         res.redirect('/employee/view-employee');
     }
 };

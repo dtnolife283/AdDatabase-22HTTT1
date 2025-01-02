@@ -18,4 +18,16 @@ function filterEmployees() {
         }
     });
 }
-  
+
+function validatePhoneNumber() {
+    const phoneNumber = document.getElementById('phoneNumber').value;
+    if (/\D/.test(phoneNumber)) {
+        alert('Phone number can only contain numbers.');
+        return false;
+    }
+    if (phoneNumber.length > 10) {
+        alert('Phone number cannot have more than 10 characters.');
+        return false; 
+    }
+    return true; 
+}
