@@ -22,6 +22,7 @@ const inRestaurantController = {
         branchId,
         areaId: branch.ID_Area,
         allFoods,
+        redirectUrl: req.baseUrl,
         inRestaurant: true,
       });
     } catch (err) {
