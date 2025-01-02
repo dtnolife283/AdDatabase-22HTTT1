@@ -1,0 +1,70 @@
+<div class="container mt-4">
+    <div class="filter ms-3 me-3">
+        <span class="filter-name">Employees</span>
+        <button class="filter-button">
+            <span class="filter-icon">
+                <ion-icon name="filter-circle-outline"></ion-icon>
+            </span>
+        </button>
+    </div>
+</div>
+<div class="container mt-4">
+    <div class="filter-content hide ms-3 me-3">
+        <form action="/employee/view-employee" method="get">
+            <div class="filter-item">
+                <label for="branch">Branch</label>
+                <select name="branch" id="branch">
+                    <option value="all" selected>All</option>
+                    {{#each branches}}
+                        <option value="{{ID_Branch}}" {{#if (eq ../selectedBranch ID_Branch)}}selected{{/if}}>{{BranchName}}</option>
+                    {{/each}}
+                </select>
+            </div>
+            <div class="filter-actions">
+                <button type="submit">Apply Filter</button>
+                <button type="button" id="reset-filters">Reset</button>
+            </div>
+        </form>
+    </div>
+</div>
+<div class="container mt-4">    
+    <div class="employee ms-3 me-3">
+        <div class="row">
+            {{#each employees}}
+                <div class="col-md-3 col-sm-6">
+                    <div class="employee-item card mb-4 shadow">
+                        <div class="card-body" id="{{ID_Employee}}">
+                            <h5 class="card-title text-primary">
+                                <ion-icon name="person-circle-outline"></ion-icon> {{EmployeeName}}
+                            </h5>
+                            <p class="card-text d-flex align-items-center">
+                                <i class="bi bi-calendar me-2"></i> 
+                                <span><strong>Date of Birth:</strong> {{DoB}}</span>
+                            </p>
+                            <p class="card-text d-flex align-items-center">
+                                <i class="bi bi-telephone me-2"></i> 
+                                <span><strong>Phone Number:</strong> {{PhoneNumber}}</span>
+                            </p>
+                            <p class="card-text d-flex align-items-center">
+                                <i class="bi bi-gender-ambiguous me-2"></i> 
+                                <span><strong>Gender:</strong> {{#if (eq Gender 'M')}} Male {{else}} Female {{/if}}</span>
+                            </p>
+                            <p class="card-text d-flex align-items-center">
+                                <i class="bi bi-briefcase me-2"></i> 
+                                <span><strong>Department:</strong> {{DepartmentName}}</span>
+                            </p>
+                        </div>
+                        <div class="card-footer text-end">
+                            <a href="/employee/edit/{{ID_Employee}}" class="btn btn-sm btn-outline-primary">
+                                <i class="bi bi-pencil me-1"></i> Edit
+                            </a>
+                            <a href="/employee/delete/{{ID_Employee}}" class="btn btn-sm btn-outline-danger">
+                                <i class="bi bi-trash me-1"></i> Delete
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            {{/each}}
+        </div>
+    </div>
+</div>

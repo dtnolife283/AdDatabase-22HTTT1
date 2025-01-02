@@ -5,6 +5,7 @@ import { fileURLToPath } from "url";
 import onlineOrderRoutes from "./routes/online-order.js";
 import viewRoutes from "./routes/view.js";
 import menuRoutes from "./routes/menu.js";
+import viewEmployeeRoutes from "./routes/view-employee.js";
 import Handlebars from "handlebars";
 
 const __filename = fileURLToPath(import.meta.url);
@@ -91,6 +92,7 @@ app.post("/booking", async (req, res) => {
 app.use("/online/view", viewRoutes);
 app.use("/online/menu", menuRoutes);
 app.use("/online/online-order", onlineOrderRoutes);
+app.use('/employee/view-employee', viewEmployeeRoutes);
 
 app.listen(port, () => {
   console.log(`Server is running on http://localhost:${port}`);

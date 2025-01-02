@@ -5,6 +5,10 @@ class GetData {
         return db("AREA").select("*");
     }
 
+    async getSimpleBranches() {
+        return db("BRANCH").select("ID_Branch", "BranchName");
+    }
+
     async getBranches(area = undefined, parking = undefined) {
         if (area == undefined && parking == undefined)
             return db("BRANCH").select("*");
@@ -79,6 +83,25 @@ class GetData {
             .join("FOOD_ITEM as f", "bf.ID_Food", "f.ID_Food")
             .where("f.ID_Food", food)
             .distinct("b.ID_Branch");
+    }
+
+    async getEmployees(branch = 'all') {
+        if (branch === 'all' || branch === undefined)
+            return db("EMPLOYEE as e")
+                .join("DEPARTMENT as d", "e.ID_Department", "d.ID_Department")
+                .select(
+                    "e.*",
+                    "d.DepartmentName"
+                );
+        return db('EMPLOYEE as e')
+            .join('DEPARTMENT as d', 'e.ID_Department', 'd.ID_Department')
+            .join('EMP_BRANCH_HISTORY as ebh', 'e.ID_Employee', 'ebh.ID_Employee')
+            .where('ebh.ID_Branch', branch)
+            .whereNull('ebh.EndDate')
+            .select(
+                'e.*',
+                'd.DepartmentName'
+            );
     }
 }
 
