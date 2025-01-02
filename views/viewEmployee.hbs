@@ -27,11 +27,21 @@
         </form>
     </div>
 </div>
+<div class="container mt-4">
+    <div class="ms-3 me-3">
+    <input
+        type="text"
+        id="searchBar"
+        class="form-control"
+        placeholder="Search by Name, Phone Number, or Department"
+        onkeyup="filterEmployees()"
+    />
+</div>
 <div class="container mt-4">    
     <div class="employee ms-3 me-3">
         <div class="row">
             {{#each employees}}
-                <div class="col-md-3 col-sm-6">
+                <div class="col-md-3 col-sm-6 employee-card">
                     <div class="employee-item card mb-4 shadow">
                         <div class="card-body" id="{{ID_Employee}}">
                             <h5 class="card-title text-primary">

@@ -20,7 +20,7 @@ const viewEmployeeController = {
         res.render('viewEmployee', {
             layout: 'employee',
             customCSS: ['online_user_home.css', 'view.css', 'viewEmployee.css'],
-            customJS: ['view.js'],
+            customJS: ['view.js', 'viewEmployee.js'],
             branches: branches,
             employees: employees,
             selectedBranch,
