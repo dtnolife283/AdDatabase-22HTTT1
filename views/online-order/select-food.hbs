@@ -6,7 +6,7 @@
         quantity, and place your order!</p>
       <p>
         <a
-          href="/online/online-order/area/{{areaId}}"
+          href="{{redirectUrl}}/area/{{areaId}}"
           class="btn btn-primary my-2"
         >Go back</a>
       </p>
@@ -116,6 +116,7 @@
         <div class="modal-footer">
           <a id="review-link" class="btn btn-primary">Proceed to Review</a>
           <button
+            id="close-bill"
             type="button"
             class="btn btn-secondary"
             data-bs-dismiss="modal"

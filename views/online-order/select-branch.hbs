@@ -5,7 +5,7 @@
       <p class="lead text-muted">Pick a restaurant near you, then place an
         order!</p>
       <p>
-        <a href="/online/online-order" class="btn btn-primary my-2">Go back</a>
+        <a id="go-back-btn" href="{{redirectUrl}}" class="btn btn-primary my-2">Go back</a>
       </p>
     </div>
   </section>
@@ -20,7 +20,7 @@
                 <h5 class="card-title text-primary">
                   <ion-icon name="storefront-outline"></ion-icon>
                   <a
-                    href="/online/online-order/branch/{{ID_Branch}}"
+                    href="{{redirectUrl}}/branch/{{ID_Branch}}"
                     style="text-decoration: none; color: black"
                   >
                     {{BranchName}}
@@ -44,7 +44,7 @@
               </div>
               <div class="card-footer text-end">
                 <a
-                  href="/online/online-order/branch/{{ID_Branch}}"
+                  href="{{../redirectUrl}}/branch/{{ID_Branch}}"
                   class="btn btn-sm btn-outline-primary"
                 >
                   <i class="bi bi-clipboard me-1"></i>

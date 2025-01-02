@@ -21,12 +21,21 @@ placeOrder.addEventListener("click", async function () {
   if (!result.isConfirmed) {
     return;
   }
+
+  const urlParams = new URLSearchParams(window.location.search);
+  const orderId = urlParams.get("orderId");
+
   const requestBody = {
     cart: cart,
     membershipId: document.getElementById("membership-id").value,
     branchId: document.getElementById("branch-id").value,
   };
-  const response = await fetch("/online/online-order/place-order", {
+
+  if (orderId) {
+    requestBody.orderId = orderId;
+  }
+
+  const response = await fetch("/in-restaurant/place-order", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -35,11 +44,28 @@ placeOrder.addEventListener("click", async function () {
   });
   const data = await response.json();
   if (response.ok) {
-    const bill = data.bill;
     const orderId = data.orderId;
-    populateBillModal(bill, orderId);
-    const billModal = new bootstrap.Modal(document.getElementById("billModal"));
-    billModal.show();
+    Swal.fire({
+      title: "Order placed successfully!",
+      text: "Do you want anything else?",
+      icon: "success",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, order more!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        const newUrl = `${window.location.pathname}?orderId=${orderId}`;
+        window.history.pushState({ path: newUrl }, "", newUrl);
+      } else {
+        const bill = data.bill;
+        populateBillModal(bill, orderId);
+        const billModal = new bootstrap.Modal(
+          document.getElementById("billModal")
+        );
+        billModal.show();
+      }
+    });
   } else {
     Swal.fire({
       icon: "error",
@@ -77,7 +103,7 @@ function populateBillModal(bill, orderId) {
     <h6>Actual Price (after discount): ${actualPrice} VNĐ</h6>`;
 
   const reviewLink = document.getElementById("review-link");
-  reviewLink.href = `/online/online-order/review/${orderId}`;
+  reviewLink.href = `/in-restaurant/review/${orderId}`;
 }
 
 document.querySelector(".row").addEventListener("click", function (e) {
@@ -111,3 +137,9 @@ function updateTotalItems() {
   totalItemsLabel.innerText = totalItems;
   placeOrder.disabled = totalItems === 0;
 }
+
+document.getElementById("close-bill").addEventListener("click", function () {
+  const newUrl = window.location.pathname;
+  window.history.pushState({ path: newUrl }, "", newUrl);
+  window.location.reload();
+});
