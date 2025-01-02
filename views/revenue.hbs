@@ -24,9 +24,9 @@
 
             <div class="form-group">
                 <label for="searchName">
-                    {{#if (eq revenueBy "branches")}}Search by Branch Name{{else}}Search by Area Name{{/if}}
+                    Search by Name
                 </label>
-                <input type="text" id="searchName" name="searchName" class="form-control" placeholder="Enter name" value="{{searchName}}">
+                <input type="text" id="searchName" name="searchName" class="form-control" placeholder="Enter name" value="{{searchName}}" required>
             </div>
 
             <button type="submit" class="btn btn-primary">View Revenue</button>
